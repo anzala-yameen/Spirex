@@ -1,0 +1,1190 @@
+/* ==========================================================================
+   Task 2: CV/Resume Card - Anzala Yameen
+   Color Theme: 🍒 Cherry Red & Rose Pink (#171717 Black + #E11D48 Cherry Red + #FB7185 Rose + #FFF7F8 Blush White)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties / Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color Palette - Light Mode (Default) */
+  --bg-primary: #fff7f8;          /* Blush White */
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fff1f3;
+  --bg-input: #fff1f3;
+  
+  --text-primary: #171717;        /* Black */
+  --text-secondary: #444444;
+  --text-muted: #888888;
+  
+  /* Brand Accents */
+  --accent-primary: #e11d48;      /* Cherry Red */
+  --accent-primary-hover: #be123c;
+  --accent-secondary: #fb7185;    /* Rose Pink */
+  --accent-tertiary: #f43f5e;
+  
+  --accent-gradient: linear-gradient(135deg, #e11d48 0%, #fb7185 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(225, 29, 72, 0.08) 0%, rgba(251, 113, 133, 0.08) 100%);
+  --accent-gradient-glow: rgba(225, 29, 72, 0.25);
+  
+  --border-color: #fecdd3;
+  --border-card: rgba(225, 29, 72, 0.15);
+  
+  --status-online: #10b981;
+  --badge-bg: rgba(225, 29, 72, 0.1);
+  --badge-text: #e11d48;
+  
+  /* Shadows & Glassmorphism */
+  --shadow-sm: 0 2px 6px rgba(23, 23, 23, 0.04);
+  --shadow-md: 0 12px 28px -6px rgba(23, 23, 23, 0.08), 0 6px 12px -4px rgba(225, 29, 72, 0.05);
+  --shadow-lg: 0 20px 40px -12px rgba(225, 29, 72, 0.25);
+  --glass-blur: blur(16px);
+  
+  /* Typography & Spacing */
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Outfit', var(--font-family);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --radius-full: 9999px;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Overrides (Black & Cherry Red) */
+[data-theme="dark"] {
+  --bg-primary: #171717;          /* Black */
+  --bg-secondary: #262626;
+  --bg-card: rgba(38, 38, 38, 0.85);
+  --bg-card-hover: #333333;
+  --bg-input: #333333;
+  
+  --text-primary: #fff7f8;        /* Blush White */
+  --text-secondary: #e5e5e5;
+  --text-muted: #a3a3a3;
+  
+  --accent-primary: #f43f5e;      /* Bright Cherry Red */
+  --accent-primary-hover: #fb7185;
+  --accent-secondary: #fb7185;    /* Rose Pink */
+  --accent-tertiary: #fda4af;
+  
+  --accent-gradient: linear-gradient(135deg, #e11d48 0%, #fb7185 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(225, 29, 72, 0.2) 0%, rgba(251, 113, 133, 0.2) 100%);
+  --accent-gradient-glow: rgba(251, 113, 133, 0.35);
+  
+  --border-color: #404040;
+  --border-card: rgba(251, 113, 133, 0.2);
+  
+  --badge-bg: rgba(251, 113, 133, 0.18);
+  --badge-text: #fb7185;
+  
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 12px 28px -6px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 20px 40px -12px rgba(225, 29, 72, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Base Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.65;
+  min-height: 100vh;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Ambient Background Blobs (Cherry Red & Rose Pink Glow) */
+.bg-ambient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-ambient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.25;
+  transition: opacity var(--transition-normal);
+}
+
+.blob-1 {
+  top: -15%;
+  left: -10%;
+  width: 55vw;
+  height: 55vw;
+  background: #e11d48;           /* Cherry Red Blob */
+}
+
+.blob-2 {
+  bottom: -15%;
+  right: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: #fb7185;           /* Rose Pink Blob */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #fb7185;
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* --------------------------------------------------------------------------
+   3. Container & Main Layout
+   -------------------------------------------------------------------------- */
+.app-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2.25rem;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .app-container {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+    gap: 1.75rem;
+  }
+}
+
+/* Top Navigation Bar */
+.top-nav {
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+  max-width: 1240px;
+  margin: 0 auto 1.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.nav-content {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.nav-brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--accent-gradient);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 1.75rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color var(--transition-fast);
+  position: relative;
+  padding: 0.35rem 0;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--accent-primary);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.btn-icon {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-icon:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 1.5rem;
+    right: 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    margin-top: 0.5rem;
+  }
+  .nav-links.show {
+    display: flex;
+  }
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Profile / Sidebar Card (Text Profile Monogram Badge)
+   -------------------------------------------------------------------------- */
+.profile-card {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 1.75rem;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 6.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.profile-card:hover {
+  border-color: var(--accent-primary);
+}
+
+/* Text Profile Monogram Badge */
+.profile-monogram-wrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-monogram-badge {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  border: 4px solid var(--bg-secondary);
+  letter-spacing: -1px;
+}
+
+.status-badge {
+  position: absolute;
+  bottom: 2px;
+  right: -2px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--bg-secondary);
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--badge-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--status-online);
+  box-shadow: 0 0 10px var(--status-online);
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 1; }
+  50% { transform: scale(1.25); opacity: 0.7; }
+  100% { transform: scale(0.95); opacity: 1; }
+}
+
+.profile-name {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.5px;
+}
+
+.profile-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  padding: 0.3rem 0.95rem;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  margin-bottom: 1.1rem;
+  border: 1px solid rgba(225, 29, 72, 0.2);
+}
+
+.profile-bio {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* Quick Contact Details List */
+.contact-quick-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+  border-top: 1px dashed var(--border-color);
+  border-bottom: 1px dashed var(--border-color);
+  padding: 1.25rem 0;
+}
+
+.contact-quick-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-align: left;
+  font-weight: 500;
+}
+
+.contact-quick-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--accent-gradient-subtle);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+/* Action Buttons */
+.profile-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:hover {
+  opacity: 0.94;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(225, 29, 72, 0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-outline:hover {
+  background: var(--bg-input);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 0.85rem;
+  justify-content: center;
+}
+
+.social-link {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.social-link:hover {
+  background: var(--accent-primary);
+  color: #ffffff;
+  border-color: var(--accent-primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   5. Main Content Area & Section Cards
+   -------------------------------------------------------------------------- */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.cv-section {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem;
+  box-shadow: var(--shadow-md);
+  transition: border-color var(--transition-fast);
+}
+
+.cv-section:hover {
+  border-color: rgba(225, 29, 72, 0.3);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 2px solid var(--border-color);
+  position: relative;
+}
+
+.section-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 70px;
+  height: 2px;
+  background: var(--accent-gradient);
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  letter-spacing: -0.3px;
+}
+
+.section-title-icon {
+  color: var(--accent-primary);
+}
+
+/* --------------------------------------------------------------------------
+   6. Education & Work Experience Timelines
+   -------------------------------------------------------------------------- */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 8px;
+  width: 3px;
+  background: var(--accent-gradient-subtle);
+  border-radius: var(--radius-full);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.25rem;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -2rem;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 4px solid var(--accent-primary);
+  box-shadow: 0 0 0 4px var(--badge-bg);
+  transition: all var(--transition-fast);
+}
+
+.timeline-item:hover .timeline-dot {
+  transform: scale(1.3);
+  background: var(--accent-primary);
+}
+
+.timeline-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.timeline-date {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  background: var(--badge-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.timeline-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-input);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.timeline-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.timeline-subtitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-description {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.timeline-bullets {
+  list-style-type: none;
+  margin-top: 0.6rem;
+}
+
+.timeline-bullets li {
+  position: relative;
+  padding-left: 1.3rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.timeline-bullets li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: var(--accent-primary);
+  font-size: 0.75rem;
+  top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   7. Skills Section & Interactive Filtering
+   -------------------------------------------------------------------------- */
+.filter-tabs {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.filter-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: var(--shadow-sm);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.35rem;
+}
+
+.skill-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.35rem;
+  transition: all var(--transition-fast);
+}
+
+.skill-card:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.skill-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+
+.skill-name {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.skill-percentage {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+}
+
+.skill-bar-bg {
+  width: 100%;
+  height: 9px;
+  background: var(--bg-input);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.1, 0.5, 0.1, 1);
+}
+
+/* --------------------------------------------------------------------------
+   8. Projects Showcase Section
+   -------------------------------------------------------------------------- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.75rem;
+}
+
+.project-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-fast);
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-primary);
+}
+
+.project-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 170px;
+  overflow: hidden;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.06);
+}
+
+.project-body {
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.project-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.45rem;
+}
+
+.project-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.1rem;
+  line-height: 1.55;
+  flex-grow: 1;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem;
+}
+
+.tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+}
+
+.project-footer {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.btn-sm {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------------------
+   9. Contact Form & Details Section
+   -------------------------------------------------------------------------- */
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 1.75rem;
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.contact-card-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  transition: transform var(--transition-fast);
+}
+
+.contact-card-item:hover {
+  transform: translateX(4px);
+  border-color: var(--accent-primary);
+}
+
+.contact-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--badge-bg);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.contact-card-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 700;
+}
+
+.contact-card-val {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+/* Interactive Form Styling */
+.contact-form {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.form-control:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-gradient-glow);
+  background: #ffffff;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-error {
+  font-size: 0.8rem;
+  color: #ef4444;
+  display: none;
+  font-weight: 600;
+}
+
+.form-group.error .form-control {
+  border-color: #ef4444;
+}
+
+.form-group.error .form-error {
+  display: block;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.toast {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  animation: slide-in 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+@keyframes slide-in {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Modal Popup */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(23, 23, 23, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  max-width: 620px;
+  width: 100%;
+  padding: 2.25rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  animation: scale-up 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+@keyframes scale-up {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: var(--bg-input);
+  border: none;
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2.25rem 0;
+  margin-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   10. Printable Resume Stylesheet (@media print)
+   -------------------------------------------------------------------------- */
+@media print {
+  .top-nav,
+  .bg-ambient,
+  .profile-actions,
+  .social-links,
+  .filter-tabs,
+  .project-footer,
+  .contact-form,
+  .toast-container,
+  .modal-overlay,
+  .footer {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt;
+  }
+
+  .app-container {
+    grid-template-columns: 260px 1fr !important;
+    padding: 0 !important;
+    gap: 1.5rem !important;
+    max-width: 100% !important;
+  }
+
+  .profile-card, .cv-section {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    backdrop-filter: none !important;
+  }
+
+  .profile-monogram-badge {
+    width: 80px !important;
+    height: 80px !important;
+    font-size: 2rem !important;
+  }
+
+  .section-header::after {
+    background: #000000 !important;
+  }
+
+  .timeline-dot {
+    border-color: #000000 !important;
+    background: #000000 !important;
+  }
+
+  .timeline-date {
+    background: #fff1f3 !important;
+    color: #000000 !important;
+    border: 1px solid #fecdd3;
+  }
+
+  .skill-card, .project-card, .contact-card-item {
+    border: 1px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    break-inside: avoid;
+  }
+
+  .skill-bar-fill {
+    background: #e11d48 !important;
+  }
+
+  .timeline-item, .skill-card, .project-card {
+    page-break-inside: avoid;
+  }
+}
