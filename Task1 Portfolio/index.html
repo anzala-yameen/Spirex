@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anzala Yameen | Software Engineer & 3D Interactive Portfolio</title>
+    <meta name="description" content="Official 3D Interactive Portfolio of Anzala Yameen - Software Engineer & BS Software Engineering student at Iqra University (CGPA 3.68/4.00). Star Performer Intern in AI Automation.">
+    <meta name="keywords" content="Anzala Yameen, Software Engineer, Portfolio, Iqra University, 3D WebGL, Web Developer, AI Automation, SAP ABAP, Machine Learning">
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <!-- WebGL Background Canvas -->
+    <div id="webgl-canvas"></div>
+
+    <!-- Custom Glowing Cyber Cursor -->
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="custom-cursor-follower" id="custom-cursor-follower"></div>
+
+    <!-- Navigation Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#hero" class="navbar-brand">
+                <div class="brand-logo-3d">AY</div>
+                <div class="brand-name">ANZALA YAMEEN</div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="btn-icon" id="theme-toggle-btn" title="Toggle Light / Dark Theme">🌙</button>
+                <button class="btn-nav-primary" id="open-resume-btn">
+                    <span>📄 View PDF Resume</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main>
+
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="container">
+                <div class="hero-grid">
+
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span class="pulse-dot"></span>
+                            <span>Open for Software Engineering Internships & Roles</span>
+                        </div>
+
+                        <div class="hero-title-prefix">&lt;Software Engineer /&gt;</div>
+                        <h1 class="hero-name">
+                            <span class="glow-text">ANZALA YAMEEN</span>
+                        </h1>
+                        <div class="hero-role">Final-Year Software Engineering Student</div>
+
+                        <p class="hero-bio">
+                            Driven software engineering student at <strong>Iqra University (CGPA 3.68/4.00)</strong> with hands-on experience in <strong>AI Automation</strong> (Star Performer Awardee), <strong>Machine Learning</strong>, <strong>Web Engineering</strong>, and <strong>SAP ABAP / Enterprise Solutions</strong>.
+                        </p>
+
+                        <div class="hero-actions">
+                            <a href="#contact" class="btn-primary">
+                                <span>Get In Touch 🚀</span>
+                            </a>
+                            <a href="#projects" class="btn-secondary">
+                                <span>Explore 10+ Projects 💻</span>
+                            </a>
+                        </div>
+
+                        <!-- Quick Stats Bar -->
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">3.68</div>
+                                <div class="stat-label">CGPA / 4.00</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">10+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">★ Star</div>
+                                <div class="stat-label">Performer</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3D Card Visualizer -->
+                    <div class="hero-3d-card">
+                        <div class="card-3d-wrapper tilt-card">
+                            <div class="card-3d-header">
+                                <div class="card-3d-title">⚡ 3D PROFILE MATRIX</div>
+                                <span class="grade-badge">CGPA 3.68</span>
+                            </div>
+
+                            <div class="card-3d-body">
+                                <div class="avatar-3d-container">
+                                    <div class="avatar-3d-inner">AY</div>
+                                    <div class="star-award-badge">
+                                        <span>★ Star Performer</span>
+                                    </div>
+                                </div>
+                                <h3 style="font-family: var(--font-heading); font-size: 1.2rem; color: var(--text-primary); margin-bottom: 4px;">Anzala Yameen</h3>
+                                <p style="color: var(--accent-cyan); font-size: 0.9rem; font-family: var(--font-code);">Iqra University '25</p>
+                            </div>
+
+                            <div class="card-3d-footer">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">ML</span>
+                                <span class="tech-tag">Java</span>
+                                <span class="tech-tag">C++</span>
+                                <span class="tech-tag">SQL</span>
+                                <span class="tech-tag">JS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">// Background & Bio</div>
+                    <h2 class="section-title">About <span>Me</span></h2>
+                    <p class="section-subtitle">A passionate developer dedicated to building elegant software systems, machine learning models, and real-world web solutions.</p>
+                </div>
+
+                <div class="about-grid">
+                    <div class="tilt-card">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--text-primary); margin-bottom: 16px;">Software Engineer Profile</h3>
+                        <div class="bio-card-content">
+                            <p id="bio-text">
+                                Loading bio information...
+                            </p>
+                        </div>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span>📧 Email:</span>
+                                <a href="mailto:anzalayameen110@gmail.com">anzalayameen110@gmail.com</a>
+                            </div>
+                            <div class="info-item">
+                                <span>📞 Phone:</span>
+                                <a href="tel:03012861227">0301-2861227</a>
+                            </div>
+                            <div class="info-item">
+                                <span>📍 Location:</span>
+                                <span>Urdu Bazar, Karachi, Pakistan</span>
+                            </div>
+                            <div class="info-item">
+                                <span>🔗 LinkedIn:</span>
+                                <a href="https://www.linkedin.com/in/anzala-yameen-b051b830a" target="_blank" rel="noopener">linkedin.com/in/anzala-yameen-b051b830a</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education Timeline -->
+                    <div class="tilt-card">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--text-primary); margin-bottom: 24px;">Academic History</h3>
+                        <div class="timeline" id="education-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">// Technical Expertise</div>
+                    <h2 class="section-title">Skills & <span>Technologies</span></h2>
+                    <p class="section-subtitle">Proficient in core programming languages, web engineering, machine learning, databases, and enterprise software concepts.</p>
+                </div>
+
+                <div class="skills-wrapper">
+                    <div class="skills-categories" id="skills-grid-container">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <!-- 3D Interactive Skill Sphere Canvas -->
+                    <div class="interactive-3d-skills tilt-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; z-index: 2;">
+                            <span style="font-family: var(--font-heading); font-size: 0.9rem; color: var(--text-primary); font-weight: 700;">3D HOLOGRAPHIC CYBER CRYSTAL MATRIX</span>
+                            <span class="section-tag" style="margin: 0;">Interactive WebGL</span>
+                        </div>
+                        <div id="skills-3d-canvas" style="width: 100%; height: 320px; position: relative;"></div>
+                        <div class="interactive-3d-overlay">
+                            <span class="interactive-hint">🖱️ Move mouse to tilt scene & observe 3D nodes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">// Professional Track</div>
+                    <h2 class="section-title">Internships & <span>Experience</span></h2>
+                    <p class="section-subtitle">Real-world experience in AI workflow automation and enterprise solution documentation.</p>
+                </div>
+
+                <div class="experience-grid" id="experience-container">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">// Portfolio Works</div>
+                    <h2 class="section-title">Featured <span>Projects</span></h2>
+                    <p class="section-subtitle">Software applications, machine learning models, web systems, and UI/UX prototypes developed by Anzala Yameen.</p>
+                </div>
+
+                <div class="projects-grid" id="projects-container">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications & Languages Section -->
+        <section id="certs-lang">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">// Qualifications & Languages</div>
+                    <h2 class="section-title">Certifications & <span>Languages</span></h2>
+                </div>
+
+                <div class="certs-lang-grid">
+                    <div class="tilt-card">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.2rem; color: var(--text-primary); margin-bottom: 20px;">📜 Certifications</h3>
+                        <div id="certs-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="tilt-card">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.2rem; color: var(--text-primary); margin-bottom: 20px;">🌐 Language Proficiency</h3>
+                        <div id="langs-container" class="lang-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">// Initiate Connection</div>
+                    <h2 class="section-title">Get In <span>Touch</span></h2>
+                    <p class="section-subtitle">Have an opportunity or question? Feel free to reach out directly or send a message.</p>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-info-cards">
+                        <a href="mailto:anzalayameen110@gmail.com" class="contact-card">
+                            <div class="contact-icon">✉️</div>
+                            <div>
+                                <div class="contact-label">Email Address</div>
+                                <div class="contact-value">anzalayameen110@gmail.com</div>
+                            </div>
+                        </a>
+
+                        <a href="tel:03012861227" class="contact-card">
+                            <div class="contact-icon">📱</div>
+                            <div>
+                                <div class="contact-label">Phone Number</div>
+                                <div class="contact-value">0301-2861227</div>
+                            </div>
+                        </a>
+
+                        <div class="contact-card">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <div class="contact-label">Location</div>
+                                <div class="contact-value">Urdu Bazar, Karachi, Pakistan</div>
+                            </div>
+                        </div>
+
+                        <a href="https://www.linkedin.com/in/anzala-yameen-b051b830a" target="_blank" rel="noopener" class="contact-card">
+                            <div class="contact-icon">💼</div>
+                            <div>
+                                <div class="contact-label">LinkedIn Profile</div>
+                                <div class="contact-value">linkedin.com/in/anzala-yameen-b051b830a</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="contact-form-container tilt-card">
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label class="form-label" for="sender-name">Your Full Name</label>
+                                <input type="text" id="sender-name" class="form-control" placeholder="e.g. John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="sender-email">Email Address</label>
+                                <input type="email" id="sender-email" class="form-control" placeholder="e.g. john@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="sender-message">Message / Inquiries</label>
+                                <textarea id="sender-message" class="form-control" placeholder="Write your message here..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+                                <span>Send Message 🚀</span>
+                            </button>
+                            <div id="form-status-msg" style="display: none; margin-top: 16px; text-align: center; font-size: 0.9rem; font-weight: 600;"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PDF Resume Modal Viewer -->
+    <div class="modal-backdrop" id="resume-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span>📄 ANZALA YAMEEN - RESUME PREVIEW</span>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <button class="btn-secondary" id="print-resume-btn" style="padding: 6px 16px; font-size: 0.8rem;">🖨️ Print / Save PDF</button>
+                    <button class="modal-close-btn" id="close-resume-btn">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="resume-preview-sheet">
+                    <div class="sheet-header">
+                        <div>
+                            <h1 class="sheet-name">ANZALA YAMEEN</h1>
+                            <div class="sheet-role">SOFTWARE ENGINEER</div>
+                        </div>
+                        <div style="text-align: right; font-size: 0.88rem; color: var(--text-secondary);">
+                            <div>📞 0301-2861227</div>
+                            <div>✉️ anzalayameen110@gmail.com</div>
+                            <div>📍 Urdu Bazar Karachi</div>
+                            <div>🔗 linkedin.com/in/anzala-yameen-b051b830a</div>
+                        </div>
+                    </div>
+
+                    <div class="sheet-section-title">About Me</div>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        Final-year BS Software Engineering student at Iqra University with a CGPA of 3.68/4.00. Strong foundation in software development, programming, database management, and web technologies. Proficient in C, Java, Python, SQL, HTML, CSS, JavaScript, jQuery, Bootstrap, Microsoft Office, and Canva. Passionate about learning new technologies, solving real-world problems, and contributing to innovative software projects. Eager to apply technical knowledge, strengthen practical skills, and gain industry experience through a software engineering internship.
+                    </p>
+
+                    <div class="sheet-section-title">Work Experience</div>
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--text-primary);">
+                            <span>Smart Automation & Workflow AI Internship</span>
+                            <span style="color: var(--accent-cyan);">Excelerate | Supported by Saint Louis University</span>
+                        </div>
+                        <div style="color: var(--accent-gold); font-size: 0.9rem; font-weight: 600; margin: 4px 0;">★ Awarded Star Performer for outstanding performance</div>
+                        <ul style="padding-left: 20px; color: var(--text-secondary); font-size: 0.92rem;">
+                            <li>Worked on AI-based automation and workflow solutions.</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--text-primary);">
+                            <span>Intern – TMC Company (Technical Department)</span>
+                            <span style="color: var(--accent-cyan);">3 Months</span>
+                        </div>
+                        <ul style="padding-left: 20px; color: var(--text-secondary); font-size: 0.92rem; margin-top: 6px;">
+                            <li>Assisted in preparing Technical Solution Documents (TSD).</li>
+                            <li>Gained foundational knowledge in SAP ABAP on HANA.</li>
+                            <li>Supported documentation and project-related tasks.</li>
+                        </ul>
+                    </div>
+
+                    <div class="sheet-section-title">Key Projects</div>
+                    <ul style="padding-left: 20px; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.7;">
+                        <li><strong>ML Customer Churn Predictor:</strong> Machine learning model forecasting customer churn behavior with Python & Scikit-Learn.</li>
+                        <li><strong>Heart Disease Prediction System:</strong> AI diagnostic classification tool using patient clinical datasets.</li>
+                        <li><strong>Smart Parking Management System:</strong> IoT & Web automated space tracking and slot reservation portal.</li>
+                        <li><strong>HBL Bank Redesign & Prototypes:</strong> Modernized digital banking user interface and interactive UI/UX prototypes.</li>
+                        <li><strong>Choti Cheese E-Commerce Clone:</strong> Responsive online store featuring catalog management and cart checkout.</li>
+                        <li><strong>Blood Bank Web Portal:</strong> Donor matching and emergency inventory tracking web application.</li>
+                        <li><strong>OOP Bank Management System:</strong> Secure Object-Oriented software architecture in C++/Java.</li>
+                        <li><strong>AI Smart Classroom System:</strong> Educational tech system with AI attendance tracking and analytics.</li>
+                        <li><strong>Automatic Mood Playlist Generator:</strong> Emotion-driven dynamic audio playlist generator.</li>
+                    </ul>
+
+                    <div class="sheet-section-title">Education</div>
+                    <div style="margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--text-primary);">
+                            <span>Iqra University – BS Software Engineering</span>
+                            <span>2023 – Present</span>
+                        </div>
+                        <div style="color: var(--accent-cyan); font-weight: 600;">CGPA: 3.68 / 4.00</div>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--text-primary);">
+                            <span>Government Girls Degree College, Tando Adam – HSC (Pre-Engineering)</span>
+                            <span>July 2021</span>
+                        </div>
+                        <div style="color: var(--accent-cyan); font-weight: 600;">Grade: A (75%)</div>
+                    </div>
+
+                    <div class="sheet-section-title">Skills & Certifications</div>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+                        <strong>Programming Languages:</strong> C, Java, Python, SQL<br>
+                        <strong>Web Technologies:</strong> HTML5, CSS3, JavaScript, jQuery, Bootstrap<br>
+                        <strong>Productivity & Design:</strong> Microsoft Office, Canva, Figma<br>
+                        <strong>Certifications:</strong> CIT Course (KES Academy), English Grammar Course (Aims Academy)<br>
+                        <strong>Languages:</strong> English, Urdu
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Audio Toggle Button -->
+    <button class="audio-toggle-btn" id="audio-toggle-btn" title="Toggle Synth Audio Ambience">🔊</button>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Anzala Yameen. Designed & Engineered with HTML5, CSS3, JavaScript & Three.js WebGL.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/resume-data.js"></script>
+    <script src="js/three-scene.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
