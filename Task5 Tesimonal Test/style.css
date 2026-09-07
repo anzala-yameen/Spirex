@@ -1,0 +1,281 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+.testimonials {
+    min-height: 100vh;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Section Heading */
+
+.section-heading {
+    text-align: center;
+    max-width: 700px;
+    margin-bottom: 50px;
+}
+
+.subtitle {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #6c63ff;
+    margin-bottom: 10px;
+}
+
+.section-heading h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.section-heading p {
+    color: #6b7280;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* Testimonial Container */
+
+.testimonial-container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.testimonial-wrapper {
+    width: 100%;
+    max-width: 650px;
+    position: relative;
+    min-height: 360px;
+}
+
+/* Cards */
+
+.testimonial-card {
+    display: none;
+    width: 100%;
+    min-height: 360px;
+    background: white;
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    animation: slideIn 0.5s ease;
+}
+
+.testimonial-card.active {
+    display: block;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Quote */
+
+.quote {
+    font-size: 55px;
+    line-height: 40px;
+    color: #6c63ff;
+    margin-bottom: 15px;
+}
+
+/* Stars */
+
+.stars {
+    color: #f5b301;
+    font-size: 20px;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+}
+
+/* Testimonial Text */
+
+.testimonial-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Customer */
+
+.customer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #6c63ff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.customer {
+    text-align: left;
+}
+
+.customer h3 {
+    font-size: 16px;
+    margin-bottom: 3px;
+}
+
+.customer span {
+    font-size: 13px;
+    color: #888;
+}
+
+/* Navigation Buttons */
+
+.nav-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: #6c63ff;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    flex-shrink: 0;
+}
+
+.nav-btn:hover {
+    transform: scale(1.1);
+    background: #554dd8;
+}
+
+/* Dots */
+
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background: #d1d5db;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.dot.active {
+    width: 28px;
+    border-radius: 10px;
+    background: #6c63ff;
+}
+
+/* Tablet */
+
+@media (max-width: 768px) {
+
+    .testimonials {
+        padding: 60px 15px;
+    }
+
+    .section-heading h1 {
+        font-size: 34px;
+    }
+
+    .testimonial-container {
+        gap: 10px;
+    }
+
+    .testimonial-card {
+        padding: 35px 25px;
+    }
+
+    .nav-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .section-heading {
+        margin-bottom: 35px;
+    }
+
+    .section-heading h1 {
+        font-size: 28px;
+    }
+
+    .section-heading p {
+        font-size: 14px;
+    }
+
+    .testimonial-container {
+        gap: 8px;
+    }
+
+    .testimonial-wrapper {
+        min-height: 390px;
+    }
+
+    .testimonial-card {
+        min-height: 390px;
+        padding: 30px 18px;
+    }
+
+    .quote {
+        font-size: 45px;
+    }
+
+    .testimonial-text {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .stars {
+        font-size: 17px;
+    }
+
+    .nav-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+}
