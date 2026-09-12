@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SpireX Foundation Task 8 - Interactive Drag-and-Drop List built with HTML5, CSS3, and JavaScript DOM Events by Anzala Yameen (Intern ID: 140).">
+    <title>Drag & Drop Task List | SpireX Foundation - Anzala Yameen</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Ambient Background Glows -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <div class="app-wrapper">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="brand-pill">
+                <span class="pulse-dot"></span>
+                <span class="pill-text">SpireX Foundation • Frontend Internship • Task 8</span>
+            </div>
+
+            <div class="header-content">
+                <div class="title-group">
+                    <h1>Drag & Drop Task Organizer</h1>
+                    <p class="subtitle">Rearrange and prioritize tasks dynamically using native JavaScript DOM Drag & Drop events</p>
+                </div>
+
+                <div class="header-controls">
+                    <button id="themeToggle" class="icon-btn" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="main-container">
+            <!-- Add Task Form Bar -->
+            <section class="action-bar-card">
+                <form id="addTaskForm" class="add-task-form" onsubmit="event.preventDefault();">
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="taskInput" 
+                            class="task-input" 
+                            placeholder="Add a new task or priority item..." 
+                            required
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="tag-selector-wrapper">
+                        <select id="taskPriority" class="priority-select" aria-label="Task Tag">
+                            <option value="high">🔥 High Priority</option>
+                            <option value="frontend" selected>💻 Frontend UI</option>
+                            <option value="backend">⚡ API / Backend</option>
+                            <option value="design">🎨 UI/UX Design</option>
+                            <option value="testing">🧪 QA & Testing</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" id="addBtn" class="add-btn">
+                        <span class="btn-icon">+</span>
+                        <span class="btn-text">Add Item</span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Main Draggable List Container -->
+            <section class="list-section">
+                <!-- Toolbar / Stats Bar -->
+                <div class="list-toolbar">
+                    <div class="stats-group">
+                        <div class="stat-badge">
+                            <span class="stat-label">Total Items:</span>
+                            <span class="stat-val" id="totalCount">6</span>
+                        </div>
+                        <div class="stat-badge">
+                            <span class="stat-label">Completed:</span>
+                            <span class="stat-val highlight" id="completedCount">0</span>
+                        </div>
+                    </div>
+
+                    <div class="list-actions">
+                        <button type="button" id="shuffleBtn" class="tool-btn" title="Shuffle Items Randomly">
+                            <span>🔀 Shuffle</span>
+                        </button>
+                        <button type="button" id="resetBtn" class="tool-btn" title="Reset to Original Order">
+                            <span>↺ Reset</span>
+                        </button>
+                        <button type="button" id="clearAllBtn" class="tool-btn danger" title="Clear All Tasks">
+                            <span>🗑 Clear</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Drag Helper Tip -->
+                <div class="drag-hint">
+                    <span class="hint-icon">💡</span>
+                    <span class="hint-text"><strong>Drag and hold</strong> any item by its grip handle or card surface to reorder. Supports both desktop mouse and mobile touch gestures.</span>
+                </div>
+
+                <!-- The Draggable List -->
+                <ul class="draggable-list" id="draggableList" aria-label="Rearrangeable Task List">
+                    <!-- Populated dynamically via JavaScript -->
+                </ul>
+
+                <!-- Empty State Display -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">📋</div>
+                    <h3>Your list is empty!</h3>
+                    <p>Add a new task above or reset to load default items.</p>
+                    <button type="button" class="tool-btn reset-empty-btn" id="emptyResetBtn">↺ Load Default Tasks</button>
+                </div>
+            </section>
+
+            <!-- Technical DOM Event Inspector & Features -->
+            <section class="inspector-section">
+                <div class="inspector-head">
+                    <div class="inspector-title">
+                        <h2>DOM Event Stream Inspector</h2>
+                        <p>Live technical monitor tracking HTML5 Drag & Drop event lifecycles in real-time</p>
+                    </div>
+                    <span class="live-tag">Active Listener</span>
+                </div>
+
+                <div class="event-log-box" id="eventLogBox">
+                    <div class="log-entry system">[System Initialized] HTML5 Drag & Drop listeners attached (dragstart, dragover, dragenter, dragleave, drop, dragend).</div>
+                </div>
+            </section>
+
+            <!-- Technical Highlights -->
+            <section class="tech-specs-section">
+                <div class="spec-card">
+                    <div class="spec-icon">🎯</div>
+                    <div class="spec-info">
+                        <h3>HTML5 Drag & Drop API</h3>
+                        <p>Native browser event handling (`dataTransfer`, ghost elements, precise insertion offsets).</p>
+                    </div>
+                </div>
+
+                <div class="spec-card">
+                    <div class="spec-icon">📱</div>
+                    <div class="spec-info">
+                        <h3>Touch & Mobile Support</h3>
+                        <p>Full support for touchscreens via Pointer/Touch events for smooth mobile rearrangement.</p>
+                    </div>
+                </div>
+
+                <div class="spec-card">
+                    <div class="spec-icon">💾</div>
+                    <div class="spec-info">
+                        <h3>LocalStorage Sync</h3>
+                        <p>Automatically saves order state so changes persist seamlessly across page refreshes.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-card">
+                <div class="footer-brand">
+                    <div class="footer-logo">SpireX Foundation</div>
+                    <p class="footer-desc">Frontend Web Development Internship Program • Task 8: Drag-and-Drop List</p>
+                </div>
+
+                <div class="footer-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Intern Name:</span>
+                        <span class="meta-val">Anzala Yameen</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Intern ID:</span>
+                        <span class="meta-val highlight">140</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">University:</span>
+                        <span class="meta-val">Iqra University</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Submission Date:</span>
+                        <span class="meta-val">13th September 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 SpireX Foundation. Submitted by Anzala Yameen (ID: 140) for Technical Evaluation.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive">
+        <span id="toastIcon">✔</span>
+        <span id="toastMsg">Notification message</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
