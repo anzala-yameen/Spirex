@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SpireX Foundation Task 9 - Smart Expense Tracker with dynamic calculation of totals, category breakdown, and modern glassmorphic interface by Anzala Yameen (Intern ID: 140).">
+    <title>Smart Expense Tracker | SpireX Foundation - Anzala Yameen</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Ambient Background Lighting Orbs -->
+    <div class="ambient-glow glow-1" aria-hidden="true"></div>
+    <div class="ambient-glow glow-2" aria-hidden="true"></div>
+    <div class="ambient-glow glow-3" aria-hidden="true"></div>
+
+    <div class="app-wrapper">
+        <!-- Main Application Header -->
+        <header class="main-header">
+            <div class="brand-pill">
+                <span class="pulse-dot"></span>
+                <span class="pill-text">SpireX Foundation • Frontend Internship • Task 9</span>
+            </div>
+
+            <div class="header-content">
+                <div class="title-group">
+                    <div class="title-with-badge">
+                        <h1>Smart Expense Tracker</h1>
+                        <span class="version-tag">v2.0 Live</span>
+                    </div>
+                    <p class="subtitle">Track, analyze, and manage daily personal & business finances with real-time dynamic calculations</p>
+                </div>
+
+                <div class="header-controls">
+                    <!-- Currency Selector -->
+                    <div class="currency-picker" title="Select Currency">
+                        <label for="currencySelect" class="sr-only">Currency</label>
+                        <select id="currencySelect" class="currency-select" aria-label="Select Display Currency">
+                            <option value="$" data-code="USD" selected>USD ($)</option>
+                            <option value="₨" data-code="PKR">PKR (₨)</option>
+                            <option value="€" data-code="EUR">EUR (€)</option>
+                            <option value="£" data-code="GBP">GBP (£)</option>
+                            <option value="د.إ" data-code="AED">AED (د.إ)</option>
+                            <option value="﷼" data-code="SAR">SAR (﷼)</option>
+                            <option value="C$" data-code="CAD">CAD (C$)</option>
+                            <option value="A$" data-code="AUD">AUD (A$)</option>
+                            <option value="₹" data-code="INR">INR (₹)</option>
+                        </select>
+                    </div>
+
+                    <!-- Quick Action Buttons -->
+                    <button id="seedDataBtn" class="action-pill-btn" title="Load Sample Demo Expenses">
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text">Demo Data</span>
+                    </button>
+
+                    <button id="exportCsvBtn" class="action-pill-btn" title="Export Transactions as CSV">
+                        <span class="btn-icon">📥</span>
+                        <span class="btn-text">Export CSV</span>
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="icon-btn" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- KPI Metric Summary Cards -->
+        <section class="kpi-grid" aria-label="Financial Summary Cards">
+            <!-- Net Balance Card -->
+            <article class="kpi-card card-balance">
+                <div class="kpi-header">
+                    <span class="kpi-label">Net Balance</span>
+                    <span class="kpi-icon-wrap icon-balance">💼</span>
+                </div>
+                <div class="kpi-value-group">
+                    <span class="kpi-symbol" id="symBalance">$</span>
+                    <span class="kpi-number" id="netBalance">0.00</span>
+                </div>
+                <div class="kpi-footer">
+                    <span class="kpi-subtext" id="balanceStatus">Balanced budget</span>
+                </div>
+            </article>
+
+            <!-- Total Expenses Card -->
+            <article class="kpi-card card-expenses">
+                <div class="kpi-header">
+                    <span class="kpi-label">Total Expenses</span>
+                    <span class="kpi-icon-wrap icon-expense">💸</span>
+                </div>
+                <div class="kpi-value-group">
+                    <span class="kpi-symbol" id="symExpense">$</span>
+                    <span class="kpi-number" id="totalExpenses">0.00</span>
+                </div>
+                <div class="kpi-footer">
+                    <span class="stat-badge badge-expense" id="expenseCountBadge">0 Transactions</span>
+                </div>
+            </article>
+
+            <!-- Total Income Card -->
+            <article class="kpi-card card-income">
+                <div class="kpi-header">
+                    <span class="kpi-label">Total Income</span>
+                    <span class="kpi-icon-wrap icon-income">💰</span>
+                </div>
+                <div class="kpi-value-group">
+                    <span class="kpi-symbol" id="symIncome">$</span>
+                    <span class="kpi-number" id="totalIncome">0.00</span>
+                </div>
+                <div class="kpi-footer">
+                    <span class="stat-badge badge-income" id="incomeCountBadge">0 Inflow</span>
+                </div>
+            </article>
+
+            <!-- Monthly Budget Card -->
+            <article class="kpi-card card-budget">
+                <div class="kpi-header">
+                    <div class="budget-title-wrap">
+                        <span class="kpi-label">Monthly Budget</span>
+                        <button id="editBudgetBtn" class="link-edit-btn" title="Edit Budget Limit">Edit</button>
+                    </div>
+                    <span class="kpi-icon-wrap icon-budget">🎯</span>
+                </div>
+                <div class="kpi-value-group">
+                    <span class="kpi-symbol" id="symBudget">$</span>
+                    <span class="kpi-number" id="budgetLimit">1,500.00</span>
+                </div>
+                <div class="budget-progress-container">
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill" id="budgetProgressFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="budget-stats-row">
+                        <span id="budgetPercent">0% spent</span>
+                        <span id="budgetRemaining">Remaining: $1,500.00</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- Main Workspace: Form & Visual Analytics -->
+        <main class="workspace-grid">
+            <!-- Left Column: Add Transaction Card -->
+            <section class="glass-card form-section">
+                <div class="card-title-row">
+                    <div class="title-with-icon">
+                        <span class="section-icon">➕</span>
+                        <h2>Add New Transaction</h2>
+                    </div>
+                    <span class="hint-tag">Real-Time Sync</span>
+                </div>
+
+                <!-- Transaction Type Switcher -->
+                <div class="type-segmented-control" role="group" aria-label="Transaction Type">
+                    <button type="button" class="type-btn active" id="typeExpense" data-type="expense">
+                        <span class="type-icon">🔻</span>
+                        <span>Expense</span>
+                    </button>
+                    <button type="button" class="type-btn" id="typeIncome" data-type="income">
+                        <span class="type-icon">🔺</span>
+                        <span>Income</span>
+                    </button>
+                </div>
+
+                <!-- Transaction Form -->
+                <form id="transactionForm" class="transaction-form" novalidate>
+                    <!-- Description / Title -->
+                    <div class="form-group">
+                        <label for="transDescription" class="form-label">
+                            Description <span class="required">*</span>
+                        </label>
+                        <div class="input-with-icon">
+                            <span class="input-icon">📝</span>
+                            <input 
+                                type="text" 
+                                id="transDescription" 
+                                class="form-input" 
+                                placeholder="e.g., Grocery shopping, Electricity bill" 
+                                required 
+                                maxlength="60"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <span class="field-error" id="descError"></span>
+                    </div>
+
+                    <!-- Amount & Category Row -->
+                    <div class="form-row two-cols">
+                        <!-- Amount -->
+                        <div class="form-group">
+                            <label for="transAmount" class="form-label">
+                                Amount (<span class="form-curr-label">$</span>) <span class="required">*</span>
+                            </label>
+                            <div class="input-with-icon">
+                                <span class="input-icon" id="amountCurrIcon">$</span>
+                                <input 
+                                    type="number" 
+                                    id="transAmount" 
+                                    class="form-input amount-input" 
+                                    placeholder="0.00" 
+                                    step="0.01" 
+                                    min="0.01" 
+                                    required
+                                >
+                            </div>
+                            <span class="field-error" id="amountError"></span>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="form-group">
+                            <label for="transCategory" class="form-label">
+                                Category <span class="required">*</span>
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="transCategory" class="form-select" required>
+                                    <option value="food" selected>🍔 Food & Dining</option>
+                                    <option value="transport">🚗 Transportation</option>
+                                    <option value="shopping">🛍️ Shopping & Apparel</option>
+                                    <option value="bills">💡 Bills & Utilities</option>
+                                    <option value="entertainment">🎬 Entertainment</option>
+                                    <option value="health">💊 Health & Medical</option>
+                                    <option value="education">📚 Education & Work</option>
+                                    <option value="salary">💼 Salary & Inflow</option>
+                                    <option value="other">🏷️ Miscellaneous</option>
+                                </select>
+                            </div>
+                            <span class="field-error" id="categoryError"></span>
+                        </div>
+                    </div>
+
+                    <!-- Date & Payment Method Row -->
+                    <div class="form-row two-cols">
+                        <!-- Date -->
+                        <div class="form-group">
+                            <label for="transDate" class="form-label">
+                                Date <span class="required">*</span>
+                            </label>
+                            <input 
+                                type="date" 
+                                id="transDate" 
+                                class="form-input date-input" 
+                                required
+                            >
+                            <span class="field-error" id="dateError"></span>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="form-group">
+                            <label for="transPayment" class="form-label">
+                                Payment Method
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="transPayment" class="form-select">
+                                    <option value="card" selected>💳 Credit/Debit Card</option>
+                                    <option value="cash">💵 Cash</option>
+                                    <option value="online">📱 Digital Wallet / App</option>
+                                    <option value="bank">🏦 Bank Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Optional Memo / Notes -->
+                    <div class="form-group">
+                        <label for="transNote" class="form-label">
+                            Note / Memo <span class="optional">(Optional)</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="transNote" 
+                            class="form-input" 
+                            placeholder="Add brief details, receipt info, etc." 
+                            maxlength="100"
+                        >
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitTransBtn" class="primary-btn submit-btn">
+                        <span class="btn-icon">✓</span>
+                        <span class="btn-text">Add Expense</span>
+                    </button>
+
+                    <!-- Quick Preset Expense Chips -->
+                    <div class="quick-presets">
+                        <span class="presets-label">⚡ Quick Presets:</span>
+                        <div class="presets-list">
+                            <button type="button" class="preset-chip" data-desc="Coffee & Snacks" data-amount="5.00" data-cat="food">☕ Coffee ($5)</button>
+                            <button type="button" class="preset-chip" data-desc="Fast Food Lunch" data-amount="15.00" data-cat="food">🍔 Lunch ($15)</button>
+                            <button type="button" class="preset-chip" data-desc="Fuel & Gas" data-amount="40.00" data-cat="transport">⛽ Fuel ($40)</button>
+                            <button type="button" class="preset-chip" data-desc="Supermarket Groceries" data-amount="75.00" data-cat="food">🛒 Grocery ($75)</button>
+                            <button type="button" class="preset-chip" data-desc="Internet & WiFi Bill" data-amount="50.00" data-cat="bills">🌐 Internet ($50)</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Right Column: Visual Category Breakdown & Analytics -->
+            <section class="glass-card analytics-section">
+                <div class="card-title-row">
+                    <div class="title-with-icon">
+                        <span class="section-icon">📊</span>
+                        <h2>Spending Breakdown</h2>
+                    </div>
+                    <span class="hint-tag" id="breakdownTotalTag">Total: $0.00</span>
+                </div>
+
+                <!-- Donut Chart & Category Distribution -->
+                <div class="analytics-content">
+                    <!-- SVG Donut Chart -->
+                    <div class="chart-container">
+                        <div class="donut-chart-wrapper">
+                            <svg class="donut-chart" viewBox="0 0 42 42" aria-label="Expense Breakdown Chart" role="img">
+                                <circle class="donut-ring-bg" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="var(--border-light)" stroke-width="4"></circle>
+                                <g id="donutSegmentsGroup"></g>
+                            </svg>
+                            <div class="donut-center-label">
+                                <span class="donut-center-subtitle">Spent</span>
+                                <span class="donut-center-amount" id="chartCenterAmount">$0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Breakdown Progress Bars -->
+                    <div class="category-bars-list" id="categoryBarsContainer">
+                        <!-- Populated dynamically via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Financial Highlights Matrix -->
+                <div class="insights-matrix">
+                    <div class="insight-box">
+                        <span class="insight-label">Highest Expense</span>
+                        <span class="insight-value" id="insightHighest">$0.00</span>
+                    </div>
+                    <div class="insight-box">
+                        <span class="insight-label">Average Expense</span>
+                        <span class="insight-value" id="insightAverage">$0.00</span>
+                    </div>
+                    <div class="insight-box">
+                        <span class="insight-label">Total Recorded</span>
+                        <span class="insight-value" id="insightCount">0 items</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Transaction History Section -->
+        <section class="glass-card history-section">
+            <div class="history-header">
+                <div class="history-title-wrap">
+                    <div class="title-with-icon">
+                        <span class="section-icon">📜</span>
+                        <h2>Transaction History</h2>
+                    </div>
+                    <span class="counter-badge" id="historyCounterBadge">0 Transactions</span>
+                </div>
+
+                <!-- Filters & Controls Toolbar -->
+                <div class="history-toolbar">
+                    <!-- Search Input -->
+                    <div class="search-input-wrap">
+                        <span class="search-icon">🔍</span>
+                        <input 
+                            type="search" 
+                            id="searchQuery" 
+                            class="search-input" 
+                            placeholder="Search expenses by title or note..." 
+                            aria-label="Search expenses"
+                        >
+                    </div>
+
+                    <!-- Filter By Category -->
+                    <div class="filter-group">
+                        <label for="filterCategory" class="sr-only">Filter Category</label>
+                        <select id="filterCategory" class="filter-select" aria-label="Filter by category">
+                            <option value="all">All Categories</option>
+                            <option value="food">🍔 Food & Dining</option>
+                            <option value="transport">🚗 Transportation</option>
+                            <option value="shopping">🛍️ Shopping</option>
+                            <option value="bills">💡 Utilities & Bills</option>
+                            <option value="entertainment">🎬 Entertainment</option>
+                            <option value="health">💊 Health & Medical</option>
+                            <option value="education">📚 Education</option>
+                            <option value="salary">💼 Salary & Income</option>
+                            <option value="other">🏷️ Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Filter By Type -->
+                    <div class="filter-group">
+                        <label for="filterType" class="sr-only">Filter Type</label>
+                        <select id="filterType" class="filter-select" aria-label="Filter by type">
+                            <option value="all">All Types</option>
+                            <option value="expense">Expenses Only</option>
+                            <option value="income">Income Only</option>
+                        </select>
+                    </div>
+
+                    <!-- Sort Dropdown -->
+                    <div class="filter-group">
+                        <label for="sortBy" class="sr-only">Sort by</label>
+                        <select id="sortBy" class="filter-select" aria-label="Sort transactions">
+                            <option value="date-desc">Date (Newest First)</option>
+                            <option value="date-asc">Date (Oldest First)</option>
+                            <option value="amount-desc">Amount (Highest First)</option>
+                            <option value="amount-asc">Amount (Lowest First)</option>
+                        </select>
+                    </div>
+
+                    <!-- Batch Clear All Button -->
+                    <button id="clearAllBtn" class="danger-outline-btn" title="Clear all recorded transactions">
+                        <span class="btn-icon">🗑️</span>
+                        <span>Clear All</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Transaction Items Container -->
+            <div class="transactions-container">
+                <div id="transactionsList" class="transactions-list" role="list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <!-- Empty State Placeholder -->
+                <div id="emptyState" class="empty-state">
+                    <div class="empty-icon-circle">💸</div>
+                    <h3>No Expenses Found</h3>
+                    <p>Start managing your finances by adding your first expense above, or click <strong>Demo Data</strong> to load sample transactions.</p>
+                    <button id="emptyDemoBtn" class="primary-btn demo-btn-compact">
+                        <span>⚡ Load Sample Data</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Lead & Intern Information Footer -->
+        <footer class="main-footer">
+            <div class="footer-card">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-accent">SpireX</span> Foundation
+                    </div>
+                    <p class="footer-desc">Frontend Web Development Internship Program • Task 9: Expense Tracker</p>
+                </div>
+
+                <div class="footer-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Intern Name:</span>
+                        <span class="meta-val">Anzala Yameen</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Intern ID:</span>
+                        <span class="meta-val highlight">140</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">University:</span>
+                        <span class="meta-val">Iqra University</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Assigned Date:</span>
+                        <span class="meta-val">13th September 2026</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Submission Deadline:</span>
+                        <span class="meta-val deadline">14th September 2026 (Before 7:00 PM)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 SpireX Foundation. Submitted by Anzala Yameen (ID: 140) for Technical Evaluation.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Edit Budget Modal -->
+    <div id="budgetModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modalTitle">Set Monthly Budget</h3>
+                <button id="closeModalBtn" class="modal-close-btn" aria-label="Close dialog">✕</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Define your monthly spending limit to monitor spending thresholds and receive visual budget pacing indicators.</p>
+                <div class="form-group">
+                    <label for="budgetInput" class="form-label">Monthly Target (<span class="form-curr-label">$</span>)</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon" id="budgetModalCurrIcon">$</span>
+                        <input type="number" id="budgetInput" class="form-input" min="1" step="10" placeholder="1500">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelBudgetBtn" class="secondary-btn">Cancel</button>
+                <button id="saveBudgetBtn" class="primary-btn">Save Budget</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear All Confirmation Modal -->
+    <div id="confirmModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="confirmTitle">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="confirmTitle">Confirm Clear All</h3>
+                <button id="closeConfirmBtn" class="modal-close-btn" aria-label="Close dialog">✕</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Are you sure you want to delete all recorded expenses and income? This action cannot be undone.</p>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelConfirmBtn" class="secondary-btn">Cancel</button>
+                <button id="proceedClearBtn" class="danger-btn">Yes, Clear All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Toast Notification -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive">
+        <span id="toastIcon">✔</span>
+        <span id="toastMsg">Notification message</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script src="script.js"></script>
+</body>
+
+</html>
