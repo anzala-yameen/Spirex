@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Information App | SpireX Foundation</title>
+    <meta name="description" content="Explore comprehensive world country profiles, dynamic demographics, flags, capitals, populations, currencies, regions, and interactive comparisons.">
+    <meta name="author" content="Anzala Yameen (Intern ID: 140) - SpireX Foundation">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- App Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+    <!-- Ambient Dynamic Background Glows -->
+    <div class="ambient-glow glow-1" aria-hidden="true"></div>
+    <div class="ambient-glow glow-2" aria-hidden="true"></div>
+    <div class="ambient-glow glow-3" aria-hidden="true"></div>
+
+    <!-- Main Navigation Bar -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand-group">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <div class="brand-title-row">
+                        <h1 class="brand-title">TerraPulse</h1>
+                        <span class="badge-task">Task 10 • SpireX</span>
+                    </div>
+                    <p class="brand-subtitle">Global Country Intelligence & Exploration Hub</p>
+                </div>
+            </div>
+
+            <!-- Header Quick Actions -->
+            <div class="header-actions">
+                <button type="button" id="randomCountryBtn" class="btn-action" title="Discover a random country">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 8h.01"></path>
+                        <path d="M8 8h.01"></path>
+                        <path d="M8 16h.01"></path>
+                        <path d="M16 16h.01"></path>
+                        <path d="M12 12h.01"></path>
+                    </svg>
+                    <span>Random Nation</span>
+                </button>
+
+                <button type="button" id="openCompareModalBtn" class="btn-action" title="Compare two nations side-by-side">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M16 3h5v5"></path>
+                        <path d="M4 20L21 3"></path>
+                        <path d="M21 16v5h-5"></path>
+                        <path d="M15 15l6 6"></path>
+                        <path d="M4 4l5 5"></path>
+                    </svg>
+                    <span>Compare (2)</span>
+                </button>
+
+                <button type="button" id="favoritesFilterBtn" class="btn-action" title="Show saved bookmarks">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span id="favCountBadge">Saved (0)</span>
+                </button>
+
+                <!-- Theme Switcher -->
+                <button type="button" id="themeToggleBtn" class="btn-icon theme-toggle" aria-label="Toggle dark and light theme" title="Toggle Theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="app-main">
+        <!-- Search & Control Center -->
+        <section class="search-section" aria-label="Search and Filter Countries">
+            <div class="search-container">
+                <!-- Search Box Wrapper -->
+                <div class="search-input-wrapper">
+                    <div class="search-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="countrySearchInput" 
+                        class="search-input" 
+                        placeholder="Search any country by name, capital city, or currency (e.g. Pakistan, Tokyo, EUR)..." 
+                        autocomplete="off" 
+                        spellcheck="false"
+                        aria-label="Search countries"
+                        aria-autocomplete="list"
+                        aria-controls="autocompleteDropdown"
+                    >
+                    <div class="search-input-right">
+                        <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Clear search" title="Clear search">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        <div class="search-kbd-hint" title="Press forward slash to focus search">/</div>
+                    </div>
+
+                    <!-- Autocomplete Dropdown List -->
+                    <div id="autocompleteDropdown" class="autocomplete-dropdown" role="listbox" aria-hidden="true">
+                        <!-- Dynamically filled with suggestions -->
+                    </div>
+                </div>
+
+                <!-- Featured / Popular Nations Quick Pills -->
+                <div class="preset-chips-row">
+                    <span class="chips-label">Quick Jump:</span>
+                    <div class="chips-scroll" id="presetChipsContainer">
+                        <button type="button" class="preset-chip active" data-country="Pakistan">🇵🇰 Pakistan</button>
+                        <button type="button" class="preset-chip" data-country="United States">🇺🇸 United States</button>
+                        <button type="button" class="preset-chip" data-country="United Kingdom">🇬🇧 United Kingdom</button>
+                        <button type="button" class="preset-chip" data-country="Japan">🇯🇵 Japan</button>
+                        <button type="button" class="preset-chip" data-country="Germany">🇩🇪 Germany</button>
+                        <button type="button" class="preset-chip" data-country="Saudi Arabia">🇸🇦 Saudi Arabia</button>
+                        <button type="button" class="preset-chip" data-country="Canada">🇨🇦 Canada</button>
+                        <button type="button" class="preset-chip" data-country="Turkey">🇹🇷 Turkey</button>
+                        <button type="button" class="preset-chip" data-country="Australia">🇦🇺 Australia</button>
+                        <button type="button" class="preset-chip" data-country="Brazil">🇧🇷 Brazil</button>
+                        <button type="button" class="preset-chip" data-country="France">🇫🇷 France</button>
+                        <button type="button" class="preset-chip" data-country="Egypt">🇪🇬 Egypt</button>
+                    </div>
+                </div>
+
+                <!-- Region Filter & Sort Controls Bar -->
+                <div class="filter-sort-bar">
+                    <!-- Region Filter Tabs -->
+                    <div class="region-tabs" role="tablist" aria-label="Filter by region">
+                        <button type="button" class="region-tab active" data-region="All" role="tab" aria-selected="true">All Regions</button>
+                        <button type="button" class="region-tab" data-region="Asia" role="tab" aria-selected="false">Asia</button>
+                        <button type="button" class="region-tab" data-region="Europe" role="tab" aria-selected="false">Europe</button>
+                        <button type="button" class="region-tab" data-region="Africa" role="tab" aria-selected="false">Africa</button>
+                        <button type="button" class="region-tab" data-region="Americas" role="tab" aria-selected="false">Americas</button>
+                        <button type="button" class="region-tab" data-region="Oceania" role="tab" aria-selected="false">Oceania</button>
+                    </div>
+
+                    <!-- Sort Dropdown & Statistics Pill -->
+                    <div class="sort-and-meta">
+                        <div class="sort-wrapper">
+                            <label for="countrySortSelect" class="sort-label">Sort by:</label>
+                            <select id="countrySortSelect" class="sort-select" aria-label="Sort countries">
+                                <option value="name-asc">Name (A → Z)</option>
+                                <option value="name-desc">Name (Z → A)</option>
+                                <option value="pop-desc">Population (Highest First)</option>
+                                <option value="pop-asc">Population (Lowest First)</option>
+                                <option value="area-desc">Area (Largest First)</option>
+                            </select>
+                        </div>
+                        <div class="count-pill">
+                            <span class="count-dot"></span>
+                            <span id="matchingCountText">197 Nations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Active Country Spotlight Showcase -->
+        <section id="showcaseSection" class="showcase-section" aria-label="Active Country Details">
+            <div class="showcase-card" id="activeShowcaseCard">
+                <!-- Top Header / Spotlight Banner -->
+                <div class="showcase-grid">
+                    <!-- Left Column: Visual Flag & Identity -->
+                    <div class="showcase-visual-col">
+                        <div class="flag-hero-frame">
+                            <img id="activeFlagImg" src="" alt="National Flag" class="flag-image" loading="eager">
+                            <div class="flag-overlay-actions">
+                                <button type="button" id="zoomFlagBtn" class="flag-action-btn" title="View Flag in High-Resolution Fullscreen">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <polyline points="9 21 3 21 3 15"></polyline>
+                                        <line x1="21" y1="3" x2="14" y2="10"></line>
+                                        <line x1="3" y1="21" x2="10" y2="14"></line>
+                                    </svg>
+                                    <span>Zoom Flag</span>
+                                </button>
+                                <span class="flag-code-tag" id="activeIsoCodeTag">PK / PAK</span>
+                            </div>
+                        </div>
+
+                        <!-- Country Title & Official Name -->
+                        <div class="country-title-block">
+                            <div class="country-name-row">
+                                <h2 id="activeCountryName" class="country-main-title">Pakistan</h2>
+                                <span id="activeFlagEmoji" class="country-flag-emoji" aria-hidden="true">🇵🇰</span>
+                            </div>
+                            <p id="activeOfficialName" class="country-official-name">Islamic Republic of Pakistan</p>
+                        </div>
+
+                        <!-- Interactive Toolbar (Speak, Bookmark, Maps, Compare) -->
+                        <div class="showcase-toolbar">
+                            <button type="button" id="speakCountryBtn" class="tool-btn" title="Listen to pronunciation of Country and Capital">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                </svg>
+                                <span>Pronounce</span>
+                            </button>
+
+                            <button type="button" id="toggleFavoriteBtn" class="tool-btn" title="Add or remove from saved favorites">
+                                <svg class="fav-star-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                <span id="favBtnLabel">Bookmark</span>
+                            </button>
+
+                            <button type="button" id="copyDetailsBtn" class="tool-btn" title="Copy country information summary to clipboard">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <span>Copy Info</span>
+                            </button>
+
+                            <a id="openMapsLink" href="#" target="_blank" rel="noopener noreferrer" class="tool-btn tool-link" title="Open country coordinates on Google Maps">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                <span>Maps</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Core Required Details (Capital, Population, Region, Currency) & Metrics -->
+                    <div class="showcase-details-col">
+                        <div class="metrics-grid">
+                            <!-- 1. Capital City -->
+                            <article class="metric-card metric-capital">
+                                <div class="metric-header">
+                                    <div class="metric-icon-box ic-capital">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M3 21h18"></path>
+                                            <path d="M5 21V7l7-4 7 4v14"></path>
+                                            <path d="M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="metric-category">Administrative Capital</span>
+                                </div>
+                                <div class="metric-body">
+                                    <div class="metric-value-primary" id="activeCapital">Islamabad</div>
+                                    <div class="metric-meta-sub" id="activeTimezone">Timezone: UTC+05:00</div>
+                                </div>
+                            </article>
+
+                            <!-- 2. Population -->
+                            <article class="metric-card metric-population">
+                                <div class="metric-header">
+                                    <div class="metric-icon-box ic-population">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="metric-category">Total Population</span>
+                                </div>
+                                <div class="metric-body">
+                                    <div class="metric-value-primary num-ticker" id="activePopulation">220,892,340</div>
+                                    <div class="progress-bar-wrap">
+                                        <div class="progress-bar-fill" id="activePopProgress" style="width: 2.7%;"></div>
+                                    </div>
+                                    <div class="metric-meta-sub" id="activePopPct">~2.72% of Global Population</div>
+                                </div>
+                            </article>
+
+                            <!-- 3. Region & Subregion -->
+                            <article class="metric-card metric-region">
+                                <div class="metric-header">
+                                    <div class="metric-icon-box ic-region">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                                            <path d="M2 12h20"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="metric-category">Region & Continent</span>
+                                </div>
+                                <div class="metric-body">
+                                    <div class="metric-value-primary" id="activeRegion">Asia</div>
+                                    <div class="metric-meta-sub" id="activeSubregion">Subregion: Southern Asia</div>
+                                </div>
+                            </article>
+
+                            <!-- 4. Currency -->
+                            <article class="metric-card metric-currency">
+                                <div class="metric-header">
+                                    <div class="metric-icon-box ic-currency">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="metric-category">Official Currency</span>
+                                </div>
+                                <div class="metric-body">
+                                    <div class="currency-highlight-row">
+                                        <span class="currency-symbol-tag" id="activeCurrencySymbol">₨</span>
+                                        <span class="metric-value-primary" id="activeCurrencyCode">PKR</span>
+                                    </div>
+                                    <div class="metric-meta-sub" id="activeCurrencyName">Pakistani rupee</div>
+                                </div>
+                            </article>
+
+                            <!-- 5. Spoken Languages -->
+                            <article class="metric-card metric-languages">
+                                <div class="metric-header">
+                                    <div class="metric-icon-box ic-languages">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="metric-category">Spoken Languages</span>
+                                </div>
+                                <div class="metric-body">
+                                    <div class="tags-container" id="activeLanguagesContainer">
+                                        <span class="tag-pill">Urdu</span>
+                                        <span class="tag-pill">English</span>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- 6. Land Area & Population Density -->
+                            <article class="metric-card metric-area">
+                                <div class="metric-header">
+                                    <div class="metric-icon-box ic-area">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                                            <line x1="9" y1="21" x2="9" y2="9"></line>
+                                        </svg>
+                                    </div>
+                                    <span class="metric-category">Land Area & Density</span>
+                                </div>
+                                <div class="metric-body">
+                                    <div class="metric-value-primary" id="activeArea">881,912 km²</div>
+                                    <div class="metric-meta-sub" id="activeDensity">Density: ~250 people / km²</div>
+                                </div>
+                            </article>
+
+                            <!-- 7. Calling Code & Internet Domain -->
+                            <article class="metric-card metric-tech">
+                                <div class="metric-header">
+                                    <div class="metric-icon-box ic-tech">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="metric-category">Telephony & Internet TLD</span>
+                                </div>
+                                <div class="metric-body">
+                                    <div class="metric-value-primary" id="activeCallingCode">+92</div>
+                                    <div class="metric-meta-sub" id="activeTld">Domain: .pk</div>
+                                </div>
+                            </article>
+
+                            <!-- 8. Geographic Coordinates -->
+                            <article class="metric-card metric-coords">
+                                <div class="metric-header">
+                                    <div class="metric-icon-box ic-coords">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                        </svg>
+                                    </div>
+                                    <span class="metric-category">Coordinates (Lat, Lng)</span>
+                                </div>
+                                <div class="metric-body">
+                                    <div class="metric-value-primary" id="activeCoordinates">30.00° N, 70.00° E</div>
+                                    <div class="metric-meta-sub">Northern & Eastern Hemispheres</div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- Bordering / Neighboring Countries Interactive Section -->
+                        <div class="borders-wrapper">
+                            <div class="borders-header">
+                                <div class="borders-title-group">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                                        <line x1="8" y1="2" x2="8" y2="18"></line>
+                                        <line x1="16" y1="6" x2="16" y2="22"></line>
+                                    </svg>
+                                    <h3 class="borders-title">Neighboring Borders</h3>
+                                </div>
+                                <span class="borders-count" id="bordersCountBadge">4 Neighbors</span>
+                            </div>
+                            <div class="borders-list" id="activeBordersContainer">
+                                <!-- Border pills rendered dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Countries Grid Directory Section -->
+        <section class="directory-section" aria-label="Country Catalog Directory">
+            <div class="directory-header">
+                <div class="directory-title-group">
+                    <h2 class="directory-title">Global Directory</h2>
+                    <p class="directory-subtitle">Browse, discover, and inspect sovereign countries across all continents</p>
+                </div>
+                <div class="directory-view-toggle">
+                    <span id="renderedCountLabel" class="rendered-count">Showing 197 nations</span>
+                </div>
+            </div>
+
+            <!-- Country Cards Grid -->
+            <div class="countries-grid" id="countriesGrid">
+                <!-- Country cards rendered dynamically -->
+            </div>
+
+            <!-- Empty State if search yields no results -->
+            <div id="noResultsState" class="empty-state hidden">
+                <div class="empty-icon-circle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                </div>
+                <h3 class="empty-title">No matching countries found</h3>
+                <p class="empty-desc">We couldn't find any nation matching your criteria. Try adjusting your query or resetting the filters.</p>
+                <button type="button" id="resetFiltersBtn" class="btn-primary">Reset Filters</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Side-by-Side Comparison Modal -->
+    <div id="compareModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="compareModalTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h3 id="compareModalTitle" class="modal-title">Compare Sovereign Nations</h3>
+                    <p class="modal-subtitle">Direct side-by-side demographic and geographic analysis</p>
+                </div>
+                <button type="button" class="modal-close-btn" id="closeCompareModalBtn" aria-label="Close Comparison">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Country Selectors -->
+                <div class="compare-selectors-row">
+                    <div class="compare-select-field">
+                        <label for="compareSelectA" class="compare-label">Country 1:</label>
+                        <select id="compareSelectA" class="compare-select"></select>
+                    </div>
+                    <div class="compare-vs-badge">VS</div>
+                    <div class="compare-select-field">
+                        <label for="compareSelectB" class="compare-label">Country 2:</label>
+                        <select id="compareSelectB" class="compare-select"></select>
+                    </div>
+                </div>
+
+                <!-- Comparison Cards Grid -->
+                <div class="compare-results-grid" id="compareResultsContent">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Flag Viewer Modal -->
+    <div id="flagModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="flagModalTitle">
+        <div class="modal-dialog modal-flag">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h3 id="flagModalTitle" class="modal-title">Flag of Pakistan</h3>
+                    <p class="modal-subtitle" id="flagModalSubtitle">Official National Ensign</p>
+                </div>
+                <button type="button" class="modal-close-btn" id="closeFlagModalBtn" aria-label="Close Flag Viewer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="flag-modal-body">
+                <img id="flagModalImg" src="" alt="High-Resolution Flag" class="flag-modal-img">
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Banner -->
+    <div id="toastNotification" class="toast-notification" role="status" aria-live="polite">
+        <span id="toastMessage">Country details copied to clipboard!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="footer-icon">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span class="footer-brand-title">TerraPulse • Country Information App</span>
+                </div>
+                <p class="footer-copy">SpireX Foundation Frontend Web Development Internship — Task 10</p>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-author-badge">
+                    <span class="author-label">Developed By:</span>
+                    <span class="author-name">Anzala Yameen</span>
+                    <span class="author-id">Intern ID: 140</span>
+                </div>
+                <div class="footer-date-pill">
+                    <span>Submission: 15th September 2026</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- 1. Offline & Live Combined Comprehensive Country Dataset -->
+    <script src="countries-data.js"></script>
+    <!-- 2. Main Application Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
