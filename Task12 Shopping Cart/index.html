@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVA — Modern Shopping</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <a href="#" class="brand">
+            <span class="brand-mark">N</span>
+            NOVA
+        </a>
+
+        <nav class="nav-links">
+            <a href="#shop">Shop</a>
+            <a href="#categories">Categories</a>
+            <a href="#featured">Featured</a>
+        </nav>
+
+        <div class="nav-actions">
+            <button class="icon-btn" id="searchToggle" aria-label="Search">
+                ⌕
+            </button>
+
+            <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">
+                ♡
+            </button>
+
+            <button class="cart-btn" id="cartButton">
+                Cart
+                <span id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+
+    <!-- SEARCH BAR -->
+    <div class="search-panel" id="searchPanel">
+        <div class="search-box">
+            <span>⌕</span>
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search products..."
+            >
+            <button id="closeSearch">ESC</button>
+        </div>
+    </div>
+
+
+    <!-- HERO -->
+    <main>
+
+        <section class="hero">
+            <div class="hero-content">
+                <p class="eyebrow">NEW SEASON / 2026</p>
+
+                <h1>
+                    Objects made
+                    <span>for living.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Discover carefully selected essentials designed
+                    to make everyday life feel a little better.
+                </p>
+
+                <a href="#shop" class="primary-btn">
+                    Explore collection
+                    <span>→</span>
+                </a>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-circle"></div>
+
+                <div class="floating-card card-one">
+                    <span>01</span>
+                    <strong>DESIGN</strong>
+                </div>
+
+                <div class="floating-card card-two">
+                    <span>02</span>
+                    <strong>QUALITY</strong>
+                </div>
+
+                <div class="hero-product">
+                    <div class="product-shape">⌚</div>
+                </div>
+
+                <div class="hero-stamp">
+                    EST.<br>
+                    2026
+                </div>
+            </div>
+        </section>
+
+
+        <!-- CATEGORY STRIP -->
+        <section class="categories" id="categories">
+
+            <div class="section-top">
+                <div>
+                    <p class="eyebrow">BROWSE</p>
+                    <h2>Shop by category</h2>
+                </div>
+            </div>
+
+            <div class="category-grid">
+
+                <button class="category-card active" data-category="All">
+                    <span>✦</span>
+                    <strong>All</strong>
+                    <small>Everything</small>
+                </button>
+
+                <button class="category-card" data-category="Technology">
+                    <span>◉</span>
+                    <strong>Tech</strong>
+                    <small>Smart essentials</small>
+                </button>
+
+                <button class="category-card" data-category="Fashion">
+                    <span>◇</span>
+                    <strong>Fashion</strong>
+                    <small>Daily essentials</small>
+                </button>
+
+                <button class="category-card" data-category="Lifestyle">
+                    <span>○</span>
+                    <strong>Lifestyle</strong>
+                    <small>Made for you</small>
+                </button>
+
+            </div>
+        </section>
+
+
+        <!-- SHOP -->
+        <section class="shop" id="shop">
+
+            <div class="section-top shop-heading">
+                <div>
+                    <p class="eyebrow">THE COLLECTION</p>
+                    <h2>Featured products</h2>
+                </div>
+
+                <div class="results-info">
+                    <span id="productCount">0 products</span>
+                    <select id="sortSelect" aria-label="Sort products">
+                        <option value="default">Sort by</option>
+                        <option value="low">Price: Low → High</option>
+                        <option value="high">Price: High → Low</option>
+                        <option value="name">Name: A → Z</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid"></div>
+
+        </section>
+
+
+        <!-- PROMO -->
+        <section class="promo">
+            <div>
+                <p class="eyebrow">NOVA MEMBER</p>
+                <h2>Get 15% off your first order.</h2>
+                <p>
+                    Use code <strong>NOVA15</strong> at checkout.
+                </p>
+            </div>
+
+            <button class="secondary-btn" id="copyPromo">
+                Copy code
+            </button>
+        </section>
+
+    </main>
+
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <span>✓</span>
+        <p id="toastMessage">Added to cart</p>
+    </div>
+
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay"></div>
+
+
+    <!-- CART DRAWER -->
+    <aside class="cart-drawer" id="cartDrawer">
+
+        <div class="cart-header">
+            <div>
+                <p class="eyebrow">YOUR BAG</p>
+                <h2>Shopping cart</h2>
+            </div>
+
+            <button class="close-btn" id="closeCart">×</button>
+        </div>
+
+
+        <div class="shipping-progress">
+
+            <div class="shipping-text">
+                <span id="shippingMessage">
+                    Add products to your cart
+                </span>
+                <span id="shippingAmount">$0 / $150</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+        </div>
+
+
+        <div class="cart-items" id="cartItems"></div>
+
+
+        <div class="cart-footer">
+
+            <div class="promo-input">
+                <input
+                    type="text"
+                    id="promoInput"
+                    placeholder="Promo code"
+                >
+                <button id="applyPromo">Apply</button>
+            </div>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <strong id="subtotal">$0.00</strong>
+            </div>
+
+            <div class="summary-row discount-row" id="discountRow">
+                <span>Discount</span>
+                <strong id="discount">-$0.00</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Shipping</span>
+                <strong id="shipping">$0.00</strong>
+            </div>
+
+            <div class="total-row">
+                <span>Total</span>
+                <strong id="total">$0.00</strong>
+            </div>
+
+            <button class="checkout-btn" id="checkoutBtn">
+                Checkout
+                <span>→</span>
+            </button>
+
+            <p class="secure-note">
+                🔒 Secure checkout · Free returns within 30 days
+            </p>
+
+        </div>
+
+    </aside>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
