@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SpireX Weather Pro - Task 11: High-precision real-time weather forecasts, 7-day extended outlook, 24-hour hourly projections, air quality indexing, and global city search.">
+  <meta name="keywords" content="Weather App, SpireX Foundation, Real-Time Weather, Forecast, Meteorology, Open-Meteo">
+  <meta name="author" content="SpireX Intern">
+  <title>SpireX Weather Pro – Live Atmospheric Intelligence & Forecast</title>
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Pro / Free CDN for weather & system icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-dark weather-clear">
+  <!-- Dynamic Ambient Weather Canvas (Rain drops, Snow, Stars, Light rays) -->
+  <div id="ambient-canvas-container" class="ambient-canvas-container" aria-hidden="true">
+    <div class="weather-backdrop-layer"></div>
+    <div id="particles-wrapper" class="particles-wrapper"></div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+  <!-- Main App Shell -->
+  <div class="app-shell">
+    <!-- Navigation & Header Bar -->
+    <header class="app-header glass-card">
+      <div class="brand-group">
+        <div class="brand-icon-wrapper">
+          <i class="fa-solid fa-cloud-bolt brand-icon"></i>
+          <span class="live-indicator-pulse" title="Live Meteorological Stream"></span>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <h1 class="brand-name">SpireX <span class="accent-text">Weather</span></h1>
+            <span class="task-badge">Task 11</span>
+          </div>
+          <p class="brand-tagline">Real-Time Atmospheric Intelligence</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Controls -->
+      <div class="header-actions">
+        <!-- Metric / Imperial Toggle -->
+        <div class="unit-toggle-group" title="Toggle Units of Measurement">
+          <button id="btn-unit-c" class="unit-btn active" data-unit="metric" aria-label="Celsius (°C, km/h)">°C</button>
+          <button id="btn-unit-f" class="unit-btn" data-unit="imperial" aria-label="Fahrenheit (°F, mph)">°F</button>
+        </div>
+
+        <!-- GPS Geolocation Button -->
+        <button id="btn-geolocation" class="icon-action-btn" title="Detect Current GPS Location" aria-label="Use Current Location">
+          <i class="fa-solid fa-location-crosshairs"></i>
+          <span class="btn-tooltip">My Location</span>
+        </button>
+
+        <!-- Compare Cities Modal Trigger -->
+        <button id="btn-open-compare" class="icon-action-btn" title="Compare Two Cities Side-by-Side" aria-label="Compare Cities">
+          <i class="fa-solid fa-code-compare"></i>
+          <span class="btn-tooltip">Compare</span>
+        </button>
+
+        <!-- Saved Favorites Drawer Toggle -->
+        <button id="btn-favorites-drawer" class="icon-action-btn" title="View Saved Cities" aria-label="Saved Favorite Cities">
+          <i class="fa-solid fa-bookmark"></i>
+          <span id="favorites-badge-count" class="badge-count">0</span>
+          <span class="btn-tooltip">Saved Cities</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Search Section & City Pills -->
+    <section class="search-section" aria-label="City Search">
+      <div class="search-box-container glass-card">
+        <i class="fa-solid fa-magnifying-glass search-leading-icon" aria-hidden="true"></i>
+        <input 
+          type="text" 
+          id="city-search-input" 
+          class="city-search-input" 
+          placeholder="Search any global city, capital, or coordinate... (Press '/' to focus)" 
+          autocomplete="off"
+          spellcheck="false"
+          aria-autocomplete="list"
+          aria-controls="search-suggestions-list"
+          aria-expanded="false"
+        >
+        <div class="search-trailing-actions">
+          <button id="btn-clear-search" class="clear-search-btn hidden" title="Clear input" aria-label="Clear Search">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <span class="keyboard-shortcut-hint" aria-hidden="true">/</span>
+        </div>
+
+        <!-- Live Autocomplete Suggestions Dropdown -->
+        <div id="search-suggestions-list" class="suggestions-dropdown glass-card hidden" role="listbox"></div>
+      </div>
+
+      <!-- Quick Jump Popular City Pills -->
+      <div class="popular-cities-scroll" aria-label="Quick Select Cities">
+        <span class="pills-label"><i class="fa-solid fa-bolt"></i> Popular:</span>
+        <div class="pills-track" id="popular-cities-pills">
+          <!-- Populated dynamically from cities-data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading Skeleton Overlay -->
+    <div id="loading-state" class="loading-state-overlay hidden" aria-live="assertive" aria-busy="true">
+      <div class="spinner-core">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <p>Fetching real-time atmospheric telemetry...</p>
+      </div>
+    </div>
+
+    <!-- Main Dynamic Weather Dashboard -->
+    <main id="weather-dashboard" class="weather-dashboard">
+      
+      <!-- Primary Hero Weather Showcase Card -->
+      <section class="hero-weather-card glass-card" aria-label="Current Weather Overview">
+        <div class="hero-top-row">
+          <div class="location-metadata">
+            <div class="location-title-group">
+              <h2 id="weather-city-name" class="weather-city-name">Islamabad</h2>
+              <span id="weather-country-badge" class="country-badge">Pakistan (PK)</span>
+              <button id="btn-toggle-favorite" class="favorite-star-btn" title="Add to Favorites" aria-label="Favorite this location">
+                <i class="fa-regular fa-star"></i>
+              </button>
+            </div>
+            <div class="location-time-row">
+              <span id="weather-local-date" class="weather-local-date"><i class="fa-regular fa-calendar"></i> Wednesday, 16 Sep 2026</span>
+              <span class="time-divider">•</span>
+              <span id="weather-local-time" class="weather-local-time"><i class="fa-regular fa-clock"></i> 08:35 PM</span>
+              <span id="weather-coordinates" class="coordinates-tag">33.68°N, 73.05°E</span>
+            </div>
+          </div>
+
+          <div class="hero-status-badges">
+            <span id="network-status-pill" class="status-pill online">
+              <span class="status-dot"></span> Live API
+            </span>
+            <button id="btn-refresh-weather" class="refresh-btn" title="Refresh Live Telemetry" aria-label="Refresh Data">
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-main-content">
+          <!-- Animated Condition Icon & Description -->
+          <div class="condition-visual">
+            <div id="weather-icon-art" class="weather-icon-art">
+              <i class="fa-solid fa-sun-cloud animated-hero-icon"></i>
+            </div>
+            <div class="condition-labels">
+              <p id="weather-condition-desc" class="condition-desc">Mainly Clear</p>
+              <p id="weather-feels-like-text" class="feels-like-label">Feels like <strong id="val-feels-like">26°C</strong></p>
+            </div>
+          </div>
+
+          <!-- Giant Temperature Display -->
+          <div class="temperature-readout">
+            <div class="temp-number-group">
+              <span id="weather-temp-value" class="temp-value">24</span>
+              <span class="temp-degree-symbol">°</span>
+              <span id="temp-unit-indicator" class="temp-unit-indicator">C</span>
+            </div>
+            <div class="temp-extremes">
+              <span class="temp-pill high" title="Daily High"><i class="fa-solid fa-arrow-up"></i> <span id="val-temp-high">28°</span></span>
+              <span class="temp-pill low" title="Daily Low"><i class="fa-solid fa-arrow-down"></i> <span id="val-temp-low">18°</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Summary Bar (Precipitation, Humidity, Wind) -->
+        <div class="hero-footer-bar">
+          <div class="quick-metric">
+            <i class="fa-solid fa-droplet metric-icon"></i>
+            <span class="metric-label">Humidity:</span>
+            <strong id="hero-quick-humidity">54%</strong>
+          </div>
+          <div class="bar-separator"></div>
+          <div class="quick-metric">
+            <i class="fa-solid fa-wind metric-icon"></i>
+            <span class="metric-label">Wind Speed:</span>
+            <strong id="hero-quick-wind">12 km/h</strong>
+          </div>
+          <div class="bar-separator"></div>
+          <div class="quick-metric">
+            <i class="fa-solid fa-cloud-rain metric-icon"></i>
+            <span class="metric-label">Precipitation:</span>
+            <strong id="hero-quick-precip">0.0 mm</strong>
+          </div>
+          <div class="bar-separator"></div>
+          <div class="quick-metric">
+            <i class="fa-solid fa-sun metric-icon"></i>
+            <span class="metric-label">UV Index:</span>
+            <strong id="hero-quick-uv">5.8 (Moderate)</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atmospheric Metrics Details Grid -->
+      <section class="metrics-grid" aria-label="Detailed Meteorological Data">
+        <!-- Relative Humidity Card -->
+        <article class="metric-card glass-card">
+          <div class="card-header">
+            <span class="card-icon-box blue"><i class="fa-solid fa-droplet"></i></span>
+            <h3 class="card-title">Relative Humidity</h3>
+          </div>
+          <div class="card-body">
+            <div class="metric-primary-val">
+              <span id="metric-humidity-val" class="metric-number">54</span>
+              <span class="metric-unit">%</span>
+            </div>
+            <!-- Dynamic Comfort Gauge -->
+            <div class="gauge-track">
+              <div id="humidity-gauge-fill" class="gauge-fill" style="width: 54%;"></div>
+            </div>
+            <p id="humidity-advisory" class="metric-subtext"><i class="fa-solid fa-circle-info"></i> Comfortable moisture level.</p>
+          </div>
+        </article>
+
+        <!-- Wind Dynamics Card -->
+        <article class="metric-card glass-card">
+          <div class="card-header">
+            <span class="card-icon-box teal"><i class="fa-solid fa-wind"></i></span>
+            <h3 class="card-title">Wind & Gusts</h3>
+          </div>
+          <div class="card-body">
+            <div class="metric-primary-val">
+              <span id="metric-wind-speed" class="metric-number">12</span>
+              <span id="metric-wind-unit" class="metric-unit">km/h</span>
+            </div>
+            <div class="wind-direction-row">
+              <div id="wind-compass-needle" class="compass-arrow-wrap" title="Wind Direction">
+                <i class="fa-solid fa-location-arrow compass-needle"></i>
+              </div>
+              <div class="wind-direction-info">
+                <span id="metric-wind-cardinal" class="direction-name">SSE (140°)</span>
+                <span class="gust-label">Gusts up to <strong id="metric-wind-gust">18 km/h</strong></span>
+              </div>
+            </div>
+            <p id="wind-advisory" class="metric-subtext"><i class="fa-solid fa-leaf"></i> Gentle breeze.</p>
+          </div>
+        </article>
+
+        <!-- UV Radiation Index -->
+        <article class="metric-card glass-card">
+          <div class="card-header">
+            <span class="card-icon-box orange"><i class="fa-solid fa-sun"></i></span>
+            <h3 class="card-title">UV Index</h3>
+          </div>
+          <div class="card-body">
+            <div class="metric-primary-val">
+              <span id="metric-uv-val" class="metric-number">5.8</span>
+              <span id="metric-uv-tier" class="status-badge-inline moderate">Moderate</span>
+            </div>
+            <div class="gauge-track">
+              <div id="uv-gauge-fill" class="gauge-fill uv-spectrum" style="width: 58%;"></div>
+            </div>
+            <p id="uv-advisory" class="metric-subtext"><i class="fa-solid fa-glasses"></i> Wear sunglasses on bright days.</p>
+          </div>
+        </article>
+
+        <!-- Atmospheric Pressure -->
+        <article class="metric-card glass-card">
+          <div class="card-header">
+            <span class="card-icon-box purple"><i class="fa-solid fa-gauge-high"></i></span>
+            <h3 class="card-title">Barometric Pressure</h3>
+          </div>
+          <div class="card-body">
+            <div class="metric-primary-val">
+              <span id="metric-pressure-val" class="metric-number">1014</span>
+              <span class="metric-unit">hPa</span>
+            </div>
+            <div class="pressure-bar">
+              <span class="sub-label">Surface: <strong id="metric-surface-pressure">960 hPa</strong></span>
+              <span id="pressure-trend-tag" class="trend-tag stable"><i class="fa-solid fa-minus"></i> Steady</span>
+            </div>
+            <p class="metric-subtext"><i class="fa-solid fa-check"></i> Standard sea-level pressure.</p>
+          </div>
+        </article>
+
+        <!-- Precipitation & Rain Probability -->
+        <article class="metric-card glass-card">
+          <div class="card-header">
+            <span class="card-icon-box cyan"><i class="fa-solid fa-cloud-showers-heavy"></i></span>
+            <h3 class="card-title">Precipitation</h3>
+          </div>
+          <div class="card-body">
+            <div class="metric-primary-val">
+              <span id="metric-precip-sum" class="metric-number">0.0</span>
+              <span id="metric-precip-unit" class="metric-unit">mm</span>
+            </div>
+            <div class="precip-probability-row">
+              <span class="sub-label">Rain Probability:</span>
+              <strong id="metric-precip-prob" class="prob-number">10%</strong>
+            </div>
+            <p id="precip-advisory" class="metric-subtext"><i class="fa-solid fa-umbrella"></i> No rain expected in the immediate period.</p>
+          </div>
+        </article>
+
+        <!-- Cloud Cover & Visibility -->
+        <article class="metric-card glass-card">
+          <div class="card-header">
+            <span class="card-icon-box gray"><i class="fa-solid fa-cloud"></i></span>
+            <h3 class="card-title">Cloud Cover & Sight</h3>
+          </div>
+          <div class="card-body">
+            <div class="metric-primary-val">
+              <span id="metric-cloud-cover" class="metric-number">25</span>
+              <span class="metric-unit">%</span>
+            </div>
+            <div class="gauge-track">
+              <div id="cloud-gauge-fill" class="gauge-fill" style="width: 25%;"></div>
+            </div>
+            <p class="metric-subtext"><i class="fa-solid fa-eye"></i> Clear horizontal visibility.</p>
+          </div>
+        </article>
+
+        <!-- Sunrise & Sunset Solar Arc -->
+        <article class="metric-card glass-card col-span-2">
+          <div class="card-header">
+            <span class="card-icon-box amber"><i class="fa-solid fa-mountain-sun"></i></span>
+            <h3 class="card-title">Sun Schedule & Daylight Cycle</h3>
+          </div>
+          <div class="card-body solar-schedule-body">
+            <div class="solar-time-card">
+              <div class="solar-icon-circle sunrise"><i class="fa-solid fa-sunrise"></i></div>
+              <div class="solar-time-data">
+                <span class="solar-event-label">Sunrise</span>
+                <strong id="metric-sunrise-time" class="solar-event-time">05:58 AM</strong>
+              </div>
+            </div>
+
+            <!-- Solar Progress Bar & Daylight Remaining -->
+            <div class="solar-progress-container">
+              <div class="solar-arc-track">
+                <div id="solar-progress-fill" class="solar-progress-fill" style="width: 70%;"></div>
+                <div id="solar-sun-pin" class="solar-sun-pin" style="left: 70%;" title="Current Sun Position">
+                  <i class="fa-solid fa-sun"></i>
+                </div>
+              </div>
+              <div class="solar-daylight-info">
+                <span id="solar-daylight-total">Daylight: 12h 24m</span>
+                <span id="solar-daylight-status" class="solar-status-pill">Sun has set</span>
+              </div>
+            </div>
+
+            <div class="solar-time-card">
+              <div class="solar-icon-circle sunset"><i class="fa-solid fa-sunset"></i></div>
+              <div class="solar-time-data">
+                <span class="solar-event-label">Sunset</span>
+                <strong id="metric-sunset-time" class="solar-event-time">06:22 PM</strong>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Air Quality Index (AQI) Card -->
+        <article class="metric-card glass-card col-span-2">
+          <div class="card-header">
+            <span class="card-icon-box green"><i class="fa-solid fa-lungs"></i></span>
+            <div class="card-title-group">
+              <h3 class="card-title">Air Quality Index (AQI)</h3>
+              <span id="aqi-category-badge" class="status-badge-inline good">Good (48)</span>
+            </div>
+          </div>
+          <div class="card-body aqi-container">
+            <div class="aqi-meter-row">
+              <div class="aqi-score-box">
+                <span id="aqi-score-number" class="aqi-large-number">48</span>
+                <span class="aqi-score-type">US AQI</span>
+              </div>
+              <div class="aqi-advisory-block">
+                <p id="aqi-health-recommendation" class="aqi-health-text">Air quality is satisfactory; air pollution poses little or no risk to health.</p>
+                <div class="aqi-gradient-scale">
+                  <div class="scale-segment good" title="0-50 Good"></div>
+                  <div class="scale-segment moderate" title="51-100 Moderate"></div>
+                  <div class="scale-segment sensitive" title="101-150 Sensitive"></div>
+                  <div class="scale-segment unhealthy" title="151-200 Unhealthy"></div>
+                  <div class="scale-segment very-unhealthy" title="201-300 Very Unhealthy"></div>
+                  <div class="scale-segment hazardous" title="300+ Hazardous"></div>
+                  <div id="aqi-needle-marker" class="aqi-needle-marker" style="left: 16%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pollutants Grid -->
+            <div class="pollutants-subgrid">
+              <div class="pollutant-pill">
+                <span class="pollutant-name">PM2.5</span>
+                <strong id="aqi-pm25" class="pollutant-val">12.4 µg/m³</strong>
+              </div>
+              <div class="pollutant-pill">
+                <span class="pollutant-name">PM10</span>
+                <strong id="aqi-pm10" class="pollutant-val">24.8 µg/m³</strong>
+              </div>
+              <div class="pollutant-pill">
+                <span class="pollutant-name">O₃ (Ozone)</span>
+                <strong id="aqi-o3" class="pollutant-val">45.2 µg/m³</strong>
+              </div>
+              <div class="pollutant-pill">
+                <span class="pollutant-name">NO₂</span>
+                <strong id="aqi-no2" class="pollutant-val">18.5 µg/m³</strong>
+              </div>
+              <div class="pollutant-pill">
+                <span class="pollutant-name">CO</span>
+                <strong id="aqi-co" class="pollutant-val">220 µg/m³</strong>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- 24-Hour Hourly Forecast Section -->
+      <section class="hourly-forecast-section glass-card" aria-label="24-Hour Hourly Forecast">
+        <div class="section-title-row">
+          <div class="title-with-icon">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <h3 class="section-title">24-Hour Dynamic Hourly Forecast</h3>
+          </div>
+          <span class="section-hint">Scroll horizontally to view upcoming hours</span>
+        </div>
+
+        <div class="hourly-scroll-container" id="hourly-forecast-track">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+
+      <!-- 7-Day Extended Daily Forecast Section -->
+      <section class="daily-forecast-section glass-card" aria-label="7-Day Extended Forecast">
+        <div class="section-title-row">
+          <div class="title-with-icon">
+            <i class="fa-solid fa-calendar-days"></i>
+            <h3 class="section-title">7-Day Extended Weather Outlook</h3>
+          </div>
+          <span class="section-hint">High / Low temperatures & precipitation</span>
+        </div>
+
+        <div class="daily-forecast-grid" id="daily-forecast-grid">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Slide-Out Saved Favorites Drawer -->
+    <aside id="favorites-drawer" class="favorites-drawer glass-card" aria-label="Saved Favorite Cities" aria-hidden="true">
+      <div class="drawer-header">
+        <div class="drawer-title">
+          <i class="fa-solid fa-bookmark"></i>
+          <h3>Saved Locations</h3>
+        </div>
+        <button id="btn-close-favorites" class="icon-close-btn" aria-label="Close Saved Locations Drawer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="drawer-body">
+        <div id="favorites-empty-state" class="empty-state">
+          <i class="fa-regular fa-star empty-icon"></i>
+          <h4>No Saved Locations Yet</h4>
+          <p>Click the star icon next to any city to pin it here for instant one-click access.</p>
+        </div>
+        <div id="favorites-list" class="favorites-list"></div>
+      </div>
+    </aside>
+
+    <!-- Side-by-Side City Weather Comparison Modal -->
+    <div id="compare-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="compare-modal-title">
+      <div class="modal-dialog glass-card">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <i class="fa-solid fa-code-compare modal-icon"></i>
+            <h3 id="compare-modal-title">Dual City Weather Comparison</h3>
+          </div>
+          <button id="btn-close-compare" class="icon-close-btn" aria-label="Close Comparison Modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="modal-body compare-modal-body">
+          <p class="modal-instructions">Select two cities below to compare live meteorological telemetry and comfort metrics side-by-side.</p>
+          
+          <div class="compare-selectors-row">
+            <div class="select-group">
+              <label for="compare-select-city-1"><i class="fa-solid fa-city"></i> City 1</label>
+              <select id="compare-select-city-1" class="compare-select"></select>
+            </div>
+            <div class="compare-vs-pill">VS</div>
+            <div class="select-group">
+              <label for="compare-select-city-2"><i class="fa-solid fa-city"></i> City 2</label>
+              <select id="compare-select-city-2" class="compare-select"></select>
+            </div>
+          </div>
+
+          <div id="compare-results-matrix" class="compare-matrix-container">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backdrop for Modals / Drawer -->
+    <div id="overlay-backdrop" class="overlay-backdrop hidden"></div>
+
+    <!-- Application Footer -->
+    <footer class="app-footer glass-card">
+      <div class="footer-meta">
+        <p class="footer-title"><strong>SpireX Foundation</strong> – Task 11: Real-Time Weather Application</p>
+        <p class="footer-deadline"><i class="fa-regular fa-clock"></i> Submission Deadline: <strong>17th September 2026, before 4:00 PM</strong></p>
+      </div>
+      <div class="footer-tech-stack">
+        <span class="tech-tag"><i class="fa-brands fa-html5"></i> HTML5</span>
+        <span class="tech-tag"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+        <span class="tech-tag"><i class="fa-brands fa-js"></i> Vanilla JS (ES6+)</span>
+        <span class="tech-tag"><i class="fa-solid fa-satellite-dish"></i> Open-Meteo API</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- JavaScript Scripts -->
+  <script src="cities-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
