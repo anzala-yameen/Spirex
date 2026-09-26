@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpireX University | Excellence in Education</title>
+    <meta name="description" content="SpireX University - Discover our departments, courses, faculty, and vibrant student life.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <span>📞 +1 (800) 555-0199 | ✉️ admissions@spirex.edu</span>
+            <div class="top-links">
+                <a href="#students">Student Portal</a>
+                <a href="#faculty">Faculty Portal</a>
+                <a href="#alumni">Alumni</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="shield">🛡️</span>
+            <div>
+                <h1>SpireX</h1>
+                <p>University</p>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#departments">Departments</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#faculty">Faculty</a></li>
+                <li><a href="#events">Events</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h2>Shape Your Future</h2>
+                <p>Empowering the next generation of leaders, thinkers, and innovators through world-class education and research.</p>
+                <div class="hero-btns">
+                    <a href="#courses" class="btn btn-primary">Explore Programs</a>
+                    <a href="#admissions" class="btn btn-outline">Apply Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Departments & Courses -->
+        <section id="departments" class="section-bg">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Academic Departments & Courses</h2>
+                    <p>Discover our diverse range of faculties dedicated to academic excellence.</p>
+                </div>
+                <div class="grid" id="departments-grid">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Faculty Section -->
+        <section id="faculty">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Meet Our Distinguished Faculty</h2>
+                    <p>Learn from award-winning professors and industry experts.</p>
+                </div>
+                <div class="grid faculty-grid" id="faculty-grid">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Life & Events -->
+        <section id="events" class="section-bg">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Campus Events & Student Life</h2>
+                    <p>Experience a vibrant community beyond the classroom.</p>
+                </div>
+                <div class="events-container">
+                    <div class="events-list" id="events-list">
+                        <!-- Injected via JS -->
+                    </div>
+                    <div class="student-stats">
+                        <div class="stat-box">
+                            <h3>15,000+</h3>
+                            <p>Students Enrolled</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>120+</h3>
+                            <p>Student Clubs</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>50+</h3>
+                            <p>Countries Represented</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter / Contact -->
+        <section class="newsletter">
+            <div class="container newsletter-content">
+                <div>
+                    <h2>Stay Updated</h2>
+                    <p>Subscribe to our newsletter for the latest campus news and research updates.</p>
+                </div>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <div class="logo">
+                    <span class="shield">🛡️</span>
+                    <div>
+                        <h2>SpireX</h2>
+                        <p style="font-size: 0.8rem;">University</p>
+                    </div>
+                </div>
+                <p>Committed to providing transformative education and fostering a culture of innovation since 1920.</p>
+            </div>
+            <div class="footer-links-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#admissions">Admissions</a></li>
+                    <li><a href="#library">Campus Library</a></li>
+                    <li><a href="#career">Career Center</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact</h3>
+                <p>📍 100 University Ave, EduCity, State 12345</p>
+                <p>📞 (800) 555-0199</p>
+                <p>✉️ info@spirex.edu</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SpireX Foundation. Task 15 Submission.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
