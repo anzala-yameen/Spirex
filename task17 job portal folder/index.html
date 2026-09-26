@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpireX Jobs | Find Your Dream Role</title>
+    <meta name="description" content="Browse and filter thousands of job listings across top companies.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="logo-icon">💼</span>
+            SpireX<span>Jobs</span>
+        </div>
+        <div class="nav-actions">
+            <button class="btn btn-outline">Sign In</button>
+            <button class="btn btn-primary">Post a Job</button>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="app-container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="filter-header">
+                <h3>Filters</h3>
+                <button class="clear-btn" onclick="clearFilters()">Clear All</button>
+            </div>
+
+            <div class="filter-group">
+                <h4>Job Type</h4>
+                <label class="checkbox-container">
+                    <input type="checkbox" value="Full-Time" class="filter-checkbox" onchange="applyFilters()"> Full-Time
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" value="Part-Time" class="filter-checkbox" onchange="applyFilters()"> Part-Time
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" value="Contract" class="filter-checkbox" onchange="applyFilters()"> Contract
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Experience Level</h4>
+                <label class="checkbox-container">
+                    <input type="checkbox" value="Entry Level" class="filter-checkbox" onchange="applyFilters()"> Entry Level
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" value="Mid Level" class="filter-checkbox" onchange="applyFilters()"> Mid Level
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" value="Senior Level" class="filter-checkbox" onchange="applyFilters()"> Senior Level
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            
+            <div class="filter-group">
+                <h4>Work Model</h4>
+                <label class="checkbox-container">
+                    <input type="checkbox" value="Remote" class="filter-checkbox" onchange="applyFilters()"> Remote
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" value="On-site" class="filter-checkbox" onchange="applyFilters()"> On-site
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" value="Hybrid" class="filter-checkbox" onchange="applyFilters()"> Hybrid
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Area -->
+            <div class="search-section">
+                <h1>Find your next great opportunity</h1>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Search by job title, skill, or company..." onkeyup="applyFilters()">
+                    <button class="btn btn-primary" onclick="applyFilters()">Search</button>
+                </div>
+                <div class="results-count" id="results-count">Showing all jobs</div>
+            </div>
+
+            <!-- Job Listings -->
+            <div class="jobs-list" id="jobs-list">
+                <!-- Jobs rendered via JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Job Details Modal -->
+    <div class="modal-overlay" id="job-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div id="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
