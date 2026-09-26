@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpireX Health | Book Your Appointment</title>
+    <meta name="description" content="SpireX Hospital Appointment Booking System. View doctors, services, and book appointments online.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            SpireX<span>Health</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#doctors">Our Doctors</a></li>
+                <li><a href="#appointment" class="nav-btn">Book Appointment</a></li>
+            </ul>
+        </nav>
+        <!-- Mobile Menu Toggle -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Your Health, Our Priority</h1>
+                <p>Expert medical care, state-of-the-art facilities, and compassionate doctors ready to serve you. Book your appointment online today.</p>
+                <div class="hero-buttons">
+                    <a href="#appointment" class="btn btn-primary">Book an Appointment</a>
+                    <a href="#doctors" class="btn btn-secondary">Find a Doctor</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hospital interior">
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="section-header">
+                <h2>Our Premium Services</h2>
+                <p>Comprehensive healthcare solutions tailored for your needs.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🫀</div>
+                    <h3>Cardiology</h3>
+                    <p>Advanced cardiac care, diagnostics, and treatments by expert cardiologists.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧠</div>
+                    <h3>Neurology</h3>
+                    <p>Comprehensive care for brain, spine, and nervous system disorders.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🦷</div>
+                    <h3>Dental Care</h3>
+                    <p>Complete dental services from routine checkups to cosmetic procedures.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👶</div>
+                    <h3>Pediatrics</h3>
+                    <p>Specialized medical care for infants, children, and adolescents.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Doctors Section -->
+        <section id="doctors" class="doctors">
+            <div class="section-header">
+                <h2>Meet Our Specialists</h2>
+                <p>Highly qualified professionals dedicated to your well-being.</p>
+            </div>
+            <div class="doctors-grid" id="doctors-grid">
+                <!-- Doctors injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Appointment Section -->
+        <section id="appointment" class="appointment">
+            <div class="appointment-container">
+                <div class="appointment-info">
+                    <h2>Book an Appointment</h2>
+                    <p>Fill out the form to schedule your visit. Our team will get back to you to confirm your slot.</p>
+                    <div class="contact-details">
+                        <p><strong>Emergency:</strong> +1 (800) 123-4567</p>
+                        <p><strong>Email:</strong> care@spirexhealth.com</p>
+                        <p><strong>Location:</strong> 123 SpireX Avenue, Health City</p>
+                    </div>
+                </div>
+                <div class="appointment-form-wrapper">
+                    <form id="booking-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" required placeholder="(123) 456-7890">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" required placeholder="john@example.com">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <select id="department" required>
+                                    <option value="" disabled selected>Select Department</option>
+                                    <option value="cardiology">Cardiology</option>
+                                    <option value="neurology">Neurology</option>
+                                    <option value="dental">Dental Care</option>
+                                    <option value="pediatrics">Pediatrics</option>
+                                    <option value="general">General Medicine</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="doctor">Preferred Doctor (Optional)</label>
+                                <select id="doctor">
+                                    <option value="any">Any Available Doctor</option>
+                                    <!-- Options injected via JS -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Preferred Date</label>
+                                <input type="date" id="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Preferred Time</label>
+                                <input type="time" id="time" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Additional Notes</label>
+                            <textarea id="message" rows="4" placeholder="Briefly describe your symptoms or reason for visit..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary submit-btn">Confirm Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal-content text-center">
+            <div class="success-icon">✓</div>
+            <h2>Appointment Requested!</h2>
+            <p>Thank you for choosing SpireX Health. We have received your request and will send a confirmation email shortly.</p>
+            <button class="btn btn-primary" id="close-modal">Done</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">SpireX<span>Health</span></div>
+                <p>Providing world-class healthcare services since 2026.</p>
+            </div>
+            <div class="footer-links">
+                <p>&copy; 2026 SpireX Foundation. Task 14 Submission.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
