@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpireX Internships | Launch Your Career</title>
+    <meta name="description" content="Explore top internship opportunities, apply, and track your applications seamlessly.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <div class="logo-icon">🚀</div>
+            SpireX<span>Intern</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home" class="active" onclick="switchTab('home')">Find Internships</a></li>
+                <li><a href="#dashboard" onclick="switchTab('dashboard')">My Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home / Explore View -->
+        <div id="view-home" class="view active-view">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Kickstart Your Career Journey</h1>
+                    <p>Discover internships that match your skills, passions, and career goals.</p>
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="Search by role, company, or tech stack...">
+                        <button class="btn btn-primary" onclick="filterInternships()">Search</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="internships-section">
+                <div class="section-header">
+                    <h2>Featured Opportunities</h2>
+                    <p>Apply to the latest openings from top companies.</p>
+                </div>
+                <div class="internship-grid" id="internship-grid">
+                    <!-- Internships rendered via JS -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Dashboard / Tracker View -->
+        <div id="view-dashboard" class="view">
+            <section class="dashboard-section">
+                <div class="dashboard-header">
+                    <h2>My Applications</h2>
+                    <p>Track the status of your internship applications here.</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="stat-applied">0</h3>
+                        <p>Total Applied</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="stat-review" style="color: #f59e0b;">0</h3>
+                        <p>In Review</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="stat-accepted" style="color: #10b981;">0</h3>
+                        <p>Accepted</p>
+                    </div>
+                </div>
+
+                <div class="tracker-list" id="tracker-list">
+                    <!-- Applied internships rendered via JS -->
+                    <div class="empty-state" id="empty-state">
+                        <p>You haven't applied to any internships yet. <a href="#" onclick="switchTab('home')">Start exploring!</a></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Internship Details Modal -->
+    <div class="modal-overlay" id="details-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div id="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Success Modal -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal-content success-content">
+            <div class="success-icon">🎉</div>
+            <h2>Application Submitted!</h2>
+            <p>Your profile has been sent to the recruiter. You can track your status in your Dashboard.</p>
+            <button class="btn btn-primary" onclick="closeSuccessModal(); switchTab('dashboard');">Go to Dashboard</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">SpireX<span>Intern</span></div>
+            <p>&copy; 2026 SpireX Foundation. Task 16 Submission.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
