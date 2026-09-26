@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpireX Culinary | Fine Dining Experience</title>
+    <meta name="description" content="Experience the finest culinary arts. View our menu, services, gallery, and book your table online.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="logo">
+            <span>SpireX</span> Culinary
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Our Story</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="#reservation" class="btn btn-outline nav-btn">Book a Table</a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="subtitle">Welcome to</span>
+            <h1>A Symphony of Flavors</h1>
+            <p>Indulge in an unforgettable dining experience where culinary artistry meets exceptional service.</p>
+            <div class="hero-actions">
+                <a href="#menu" class="btn btn-primary">View Menu</a>
+                <a href="#reservation" class="btn btn-outline">Make a Reservation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Services -->
+    <section id="about" class="about section-padding">
+        <div class="container about-grid">
+            <div class="about-text">
+                <span class="section-subtitle">Our Story</span>
+                <h2 class="section-title">Passion for Culinary Excellence</h2>
+                <p>Founded in 2026 by the SpireX Foundation, our restaurant blends traditional recipes with modern gastronomic techniques. We source only the freshest local ingredients to create dishes that delight the senses.</p>
+                
+                <div class="services-list">
+                    <div class="service-item">
+                        <div class="service-icon">🍽️</div>
+                        <div>
+                            <h3>Fine Dining</h3>
+                            <p>An elegant atmosphere perfect for romantic evenings and special occasions.</p>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon">🍷</div>
+                        <div>
+                            <h3>Private Events</h3>
+                            <p>Exclusive spaces available for corporate meetings and private celebrations.</p>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon">🛵</div>
+                        <div>
+                            <h3>Premium Delivery</h3>
+                            <p>Enjoy our signature dishes in the comfort of your home.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Chef preparing food">
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu section-padding bg-light">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-subtitle">Discover</span>
+                <h2 class="section-title">Our Menu</h2>
+            </div>
+            
+            <div class="menu-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="starters">Starters</button>
+                <button class="filter-btn" data-filter="mains">Main Courses</button>
+                <button class="filter-btn" data-filter="desserts">Desserts</button>
+            </div>
+
+            <div class="menu-grid" id="menu-grid">
+                <!-- Menu Items Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery section-padding">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-subtitle">Visuals</span>
+                <h2 class="section-title">Our Gallery</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Steak"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pasta"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Salad"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Dessert"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1560053608-13721e0d69e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Interior"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1514361892635-6b07a31e55f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wine"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="reservation section-padding">
+        <div class="container reservation-container">
+            <div class="reservation-content">
+                <span class="section-subtitle">Book a Table</span>
+                <h2 class="section-title" style="color: white;">Make a Reservation</h2>
+                <p style="color: #ccc; margin-bottom: 2rem;">Ensure your perfect evening by booking a table in advance. For parties larger than 8, please contact us directly.</p>
+                <form id="booking-form" class="booking-form">
+                    <div class="form-row">
+                        <input type="text" placeholder="Full Name" required>
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="tel" placeholder="Phone Number" required>
+                        <select required>
+                            <option value="" disabled selected>Number of Guests</option>
+                            <option value="1">1 Person</option>
+                            <option value="2">2 People</option>
+                            <option value="3">3 People</option>
+                            <option value="4">4 People</option>
+                            <option value="5">5 People</option>
+                            <option value="6">6 People</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <input type="date" required>
+                        <input type="time" required>
+                    </div>
+                    <textarea placeholder="Special Requests (Allergies, Occasion, etc.)" rows="3"></textarea>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer id="contact">
+        <div class="container footer-grid">
+            <div class="footer-info">
+                <div class="logo"><span>SpireX</span> Culinary</div>
+                <p>A premier dining destination offering exceptional cuisine in an elegant atmosphere.</p>
+                <div class="social-links">
+                    <a href="#">FB</a>
+                    <a href="#">IG</a>
+                    <a href="#">TW</a>
+                </div>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p>📍 123 SpireX Avenue, Culinary District</p>
+                <p>📞 +1 (800) 123-4567</p>
+                <p>✉️ reservations@spirexculinary.com</p>
+            </div>
+            <div class="footer-hours">
+                <h3>Opening Hours</h3>
+                <p>Mon - Thu: 11:00 AM - 10:00 PM</p>
+                <p>Fri - Sat: 11:00 AM - 11:30 PM</p>
+                <p>Sunday: 10:00 AM - 9:00 PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SpireX Foundation. Task 18 Submission.</p>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal-content">
+            <h2>Table Reserved!</h2>
+            <p>Thank you for choosing SpireX Culinary. We have received your reservation and will send a confirmation email shortly.</p>
+            <button class="btn btn-primary" id="close-modal" style="margin-top: 1.5rem;">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
